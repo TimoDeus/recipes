@@ -1,22 +1,21 @@
 import { FETCH_RECIPIES } from './actionTypes'
-import data from '../data/output.json'
+import axios from 'axios'
 
-const loadFromFile = () => Promise.resolve({ data })
+const reduceDbResult = ({ data }) => data.reduce((res, cur) => {
+  res[cur._id] = cur.recipes
+  return res
+}, {})
 
-const groupByType = array =>
-  array.reduce(
-    (objectsByKeyValue, obj) => ({
-      ...objectsByKeyValue,
-      [obj.type]: (objectsByKeyValue[obj.type] || []).concat(obj)
-    }),
-    {}
-  )
+const loadAllRecipes = () => {
+  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes')
+    .then(reduceDbResult)
+}
 
 const fetchRecipes = () => dispatch => {
-  return loadFromFile().then(
+  return loadAllRecipes().then(
     res => dispatch({
       type: FETCH_RECIPIES,
-      data: groupByType(res.data)
+      data: res
     }))
 }
 
