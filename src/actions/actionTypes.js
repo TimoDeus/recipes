@@ -1,0 +1,8 @@
+export const FETCH_RECIPIES = 'FETCH_RECIPIES';
+
+export const FILTER_BY_LABEL = 'FILTER_BY_LABEL';
+export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
+export const FILTER_BY_FREETEXT = 'FILTER_BY_FREETEXT';
+export const RESET_FILTER = 'RESET_FILTER';
+
+export const SET_SORT_ORDER = 'SET_SORT_ORDER';

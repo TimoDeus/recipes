@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Chili sin Carne",
+    "shortDescription": "Vegetarisches Chili",
+    "labels": ["Mexikanisch", "Vegetarisch"],
+    "type": "MAIN"
+  },
+  {
+    "title": "Nudeln mit Lach-Sahne-Soße",
+    "shortDescription": "Nudeln mit Lachs, Sahne Zwiebeln und Tomatenmark",
+    "labels": ["Italienisch", "Fisch", "Pasta"],
+    "type": "MAIN"
+  },
+  {
+    "title": "Pizzateig",
+    "shortDescription": "Pizza!",
+    "labels": ["Italienisch"],
+    "type": "MAIN"
+  },
+  {
+    "title": "Palak Paneer",
+    "shortDescription": "Indisches Reisgericht mit Tomaten, Spinat und Käse",
+    "labels": ["Indisch", "Vegetarisch"],
+    "type": "MAIN"
+  },
+  {
+    "title": "Obstsalat",
+    "shortDescription": "Klassischer Obstsalat mit Apfel, Banane etc.",
+    "labels": ["Vegetarisch"],
+    "type": "DESSERT"
+  },
+  {
+    "title": "Kuchen",
+    "shortDescription": "Irgendein Kuchen",
+    "labels": ["Vegetarisch", "Kuchen"],
+    "type": "PASTRIES"
+  }
+]
