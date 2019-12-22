@@ -6,23 +6,27 @@ import { Field, reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import * as PropTypes from 'prop-types'
 import { addRecipe } from '../../actions/recipes'
+import { Redirect } from 'react-router'
 
 class CreateRecipeForm extends Component {
 
   render () {
-    const { handleSubmit, submitting } = this.props
-    return (
-      <Container>
-        <Header showSearch={false}/>
-        <form onSubmit={handleSubmit}>
-          <Field name="title" label="Titel" component={renderField} type="text"/>
-          <Field name="shortDescription" label="Kurzbeschreibung" component={renderField} type="text"/>
-          <Field name="labels" label="Labels" component={renderField} type="text"/>
-          <Field name="type" label="Kategorie" component={renderField} type="text"/>
-          <button type="submit" disabled={submitting}>Submit</button>
-        </form>
-      </Container>
-    )
+    const { handleSubmit, submitting, submitSucceeded } = this.props
+
+    return submitSucceeded ?
+      <Redirect push to="/"/>
+      : (
+        <Container>
+          <Header showSearch={false}/>
+          <form onSubmit={handleSubmit}>
+            <Field name="title" label="Titel" component={renderField} type="text"/>
+            <Field name="shortDescription" label="Kurzbeschreibung" component={renderField} type="text"/>
+            <Field name="labels" label="Labels" component={renderField} type="text"/>
+            <Field name="type" label="Kategorie" component={renderField} type="text"/>
+            <button type="submit" disabled={submitting}>Submit</button>
+          </form>
+        </Container>
+      )
   }
 }
 
