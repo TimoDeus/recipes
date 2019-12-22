@@ -5,6 +5,7 @@ import { filterByType, resetFilter } from '../../actions/filter'
 import * as PropTypes from 'prop-types'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
 import { messages } from '../../utils/messages'
+import { Link } from 'react-router-dom'
 
 const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 
@@ -27,6 +28,11 @@ const SubHeader = props => {
             </Menu.Item>
           </Menu.Menu>
         )}
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <Link to="/addRecipe">Hinzufügen</Link>
+          </Menu.Item>
+        </Menu.Menu>
       </Menu>
     </Container>
   )
