@@ -4,17 +4,15 @@ import { Container } from 'semantic-ui-react'
 import { Route, Switch } from 'react-router'
 import RecipeList from './recipes/RecipeList'
 import NotFoundPage from './NotFoundPage'
+import CreateRecipeForm from './forms/CreateRecipeForm'
 
 class App extends Component {
   render () {
     return (
-      // <div className="App">
-      // 	<Header/>
-      // 	<RecipeList/>
-      // </div>
       <Container>
         <Switch>
           <Route exact path="/" component={RecipeList}/>
+          <Route path="/addRecipe" component={CreateRecipeForm}/>
           <Route component={NotFoundPage}/>
         </Switch>
       </Container>

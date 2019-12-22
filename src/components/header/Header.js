@@ -1,17 +1,11 @@
 import React from 'react'
-import { Button, Container, Icon, Input, Label, Menu } from 'semantic-ui-react'
+import { Container, Icon, Input, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { filterByFreetext, filterByType, resetFilter } from '../../actions/filter'
+import { filterByFreetext } from '../../actions/filter'
 import * as PropTypes from 'prop-types'
-import { TYPE_PASTRIES, TYPE_DESSERT, TYPE_MAIN } from '../../utils/constants'
-import { messages } from '../../utils/messages'
-
-const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 
 const Header = props => {
-  const { onResetFilter, filter, recipes } = props
-  const activeTab = filter.type
-  const hasFilter = filter.labels.length || filter.freetext
+  const { onResetFilter, filter, showSearch = true } = props
   return (
     <Container>
       <Menu inverted>
@@ -19,24 +13,12 @@ const Header = props => {
           <Icon name='food' style={{ marginRight: '1.5em' }}/>
           Rezepte
         </Menu.Item>
+        {showSearch && (
         <Menu.Menu position='right'>
           <Menu.Item>
             <Input icon='search' placeholder='Suche...' onChange={props.onSearch} value={filter.freetext || ''}/>
           </Menu.Item>
         </Menu.Menu>
-      </Menu>
-      <Menu tabular>
-        {Object.keys(recipes).length && types.map(t => (
-          <Menu.Item active={activeTab === t} onClick={props.onTypeSelected(t)} key={t}>
-            {messages[t]} <Label circular color='blue'>{recipes[t].length}</Label>
-          </Menu.Item>)
-        )}
-        {hasFilter && (
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Button onClick={onResetFilter}>Filter zurücksetzen</Button>
-            </Menu.Item>
-          </Menu.Menu>
         )}
       </Menu>
     </Container>
@@ -44,9 +26,7 @@ const Header = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onResetFilter: () => dispatch(resetFilter()),
   onSearch: e => dispatch(filterByFreetext(e.target.value)),
-  onTypeSelected: type => () => dispatch(filterByType(type)),
 })
 
 const mapStateToProps = ({ filter, recipes }) => ({
@@ -55,9 +35,8 @@ const mapStateToProps = ({ filter, recipes }) => ({
 })
 
 Header.propTypes = {
-  onResetFilter: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
-  onTypeSelected: PropTypes.func.isRequired,
+  showSearch: PropTypes.bool
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

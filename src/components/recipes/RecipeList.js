@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { fetchRecipesIfNeeded } from '../../actions/recipes'
 import * as PropTypes from 'prop-types'
 import Header from '../header/Header'
+import SubHeader from '../header/SubHeader'
 
 class RecipeList extends Component {
 
@@ -17,6 +18,7 @@ class RecipeList extends Component {
     return (
       <Container>
         <Header/>
+        <SubHeader/>
         <Grid stackable columns={2}>
           {recipes && recipes.map(recipe =>
             <RecipeCard key={recipe.title} recipe={recipe}/>
