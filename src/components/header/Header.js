@@ -11,7 +11,7 @@ const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 const Header = props => {
   const { onResetFilter, filter, recipes } = props
   const activeTab = filter.type
-  const hasFilter = filter.labels || filter.freetext
+  const hasFilter = filter.labels.length || filter.freetext
   return (
     <Container>
       <Menu inverted>
