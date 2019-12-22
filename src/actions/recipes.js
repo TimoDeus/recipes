@@ -1,4 +1,4 @@
-import { FETCH_RECIPIES } from './actionTypes'
+import { ADD_RECIPES, FETCH_RECIPES } from './actionTypes'
 import axios from 'axios'
 
 const reduceDbResult = ({ data }) => data.reduce((res, cur) => {
@@ -14,7 +14,7 @@ const loadAllRecipes = () => {
 const fetchRecipes = () => dispatch => {
   return loadAllRecipes().then(
     res => dispatch({
-      type: FETCH_RECIPIES,
+      type: FETCH_RECIPES,
       data: res
     }))
 }
@@ -23,3 +23,15 @@ const shouldFetchRecipes = ({ recipes }) => !recipes || !Object.keys(recipes).le
 
 export const fetchRecipesIfNeeded = () => (dispatch, getState) =>
   shouldFetchRecipes(getState()) ? dispatch(fetchRecipes()) : Promise.resolve()
+
+const doAddRecipe = data => dispatch => {
+  data.labels = data.labels.split(',')
+  return axios.post(process.env.REACT_APP_API_BASE_URL + 'recipes/addRecipe', data).then(
+    res => dispatch({
+      type: ADD_RECIPES,
+      data: res
+    }))
+}
+
+
+export const addRecipe = data => dispatch => dispatch(doAddRecipe(data))
