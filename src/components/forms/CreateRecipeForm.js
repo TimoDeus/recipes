@@ -1,44 +1,42 @@
 import React, { Component } from 'react'
-import { Container } from 'semantic-ui-react'
+import { Button, Container, Form } from 'semantic-ui-react'
 import Header from '../header/Header'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import * as PropTypes from 'prop-types'
 import { addRecipe } from '../../actions/recipes'
 import { Redirect } from 'react-router'
+import TextField from './elements/TextField'
+import LabelSelector from './elements/LabelSelector'
+import { addLabel, getLabels } from '../../actions/labels'
 
 class CreateRecipeForm extends Component {
 
+  componentDidMount () {
+    this.props.getLabels()
+  }
+
   render () {
-    const { handleSubmit, submitting, submitSucceeded } = this.props
+    const { handleSubmit, submitting, submitSucceeded, labels, addLabel } = this.props
 
     return submitSucceeded ?
       <Redirect push to="/"/>
       : (
         <Container>
           <Header showSearch={false}/>
-          <form onSubmit={handleSubmit}>
-            <Field name="title" label="Titel" component={renderField} type="text"/>
-            <Field name="shortDescription" label="Kurzbeschreibung" component={renderField} type="text"/>
-            <Field name="labels" label="Labels" component={renderField} type="text"/>
-            <Field name="type" label="Kategorie" component={renderField} type="text"/>
-            <button type="submit" disabled={submitting}>Submit</button>
-          </form>
+          <Form onSubmit={handleSubmit}>
+            <TextField name="title" label="Titel"/>
+            <TextField name="shortDescription" label="Kurzbeschreibung"/>
+            <LabelSelector name="labels" label="Labels" labels={labels} onAddLabel={addLabel}/>
+            {/*<Field name="labels" label="Labels" component={renderField} type="text"/>*/}
+            {/*<Field name="type" label="Kategorie" component={renderField} type="text"/>*/}
+            <Button type='submit' disabled={submitting}>Submit</Button>
+          </Form>
         </Container>
       )
   }
 }
-
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} placeholder={label} type={type}/>
-      {touched && (error && <span>{error}</span>)}
-    </div>
-  </div>
-)
 
 const validate = values => {
   const errors = {}
@@ -52,15 +50,20 @@ const validate = values => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: data => dispatch(addRecipe(data))
+  onSubmit: data => dispatch(addRecipe(data)),
+  getLabels: () => dispatch(getLabels()),
+  addLabel: label => dispatch(addLabel(label)),
 })
 
-const mapStateToProps = ({ recipeToEdit }) => ({
-  initialValues: recipeToEdit
+const mapStateToProps = ({ recipeToEdit, labels }) => ({
+  initialValues: recipeToEdit,
+  labels
 })
 
 CreateRecipeForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  getLabels: PropTypes.func.isRequired,
+  addLabel: PropTypes.func.isRequired,
 }
 
 export default compose(

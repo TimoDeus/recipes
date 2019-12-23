@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeCard'
 import { connect } from 'react-redux'
-import { fetchRecipesIfNeeded } from '../../actions/recipes'
+import { fetchRecipes } from '../../actions/recipes'
 import * as PropTypes from 'prop-types'
 import Header from '../header/Header'
 import SubHeader from '../header/SubHeader'
@@ -10,7 +10,7 @@ import SubHeader from '../header/SubHeader'
 class RecipeList extends Component {
 
   componentDidMount () {
-    this.props.fetchRecipesIfNeeded()
+    this.props.fetchRecipes()
   }
 
   render () {
@@ -54,7 +54,7 @@ const applyFilter = (allRecipes, filter) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchRecipesIfNeeded: () => dispatch(fetchRecipesIfNeeded())
+  fetchRecipes: () => dispatch(fetchRecipes())
 })
 
 const mapStateToProps = ({ recipes, filter }) => ({

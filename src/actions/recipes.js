@@ -11,7 +11,8 @@ const loadAllRecipes = () => {
     .then(reduceDbResult)
 }
 
-const fetchRecipes = () => dispatch => {
+export const fetchRecipes = () => dispatch => {
+  console.log("fetching recipes")
   return loadAllRecipes().then(
     res => dispatch({
       type: FETCH_RECIPES,
@@ -19,19 +20,14 @@ const fetchRecipes = () => dispatch => {
     }))
 }
 
-const shouldFetchRecipes = ({ recipes }) => !recipes || !Object.keys(recipes).length
-
-export const fetchRecipesIfNeeded = () => (dispatch, getState) =>
-  shouldFetchRecipes(getState()) ? dispatch(fetchRecipes()) : Promise.resolve()
-
 const doAddRecipe = data => dispatch => {
-  data.labels = data.labels.split(',')
+  // TODO add input field for this!
+  data.type = "MAIN"
   return axios.post(process.env.REACT_APP_API_BASE_URL + 'recipes/addRecipe', data).then(
     res => dispatch({
       type: ADD_RECIPES,
       data: res
     }))
 }
-
 
 export const addRecipe = data => dispatch => dispatch(doAddRecipe(data))
