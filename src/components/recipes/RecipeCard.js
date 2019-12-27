@@ -24,7 +24,8 @@ class RecipeCard extends Component {
   }
 
   render () {
-    const { recipe, onLabelClicked } = this.props
+    const { recipe, onLabelClicked, auth } = this.props
+    const isAuthenticated = Boolean(auth.token)
     return (
       <Grid.Column>
         <Card fluid color='blue'>
@@ -40,10 +41,12 @@ class RecipeCard extends Component {
             </Card.Meta>
             {this.wrapSearchText(recipe.shortDescription)}
           </Card.Content>
+          {isAuthenticated &&
           <Card.Content extra>
-            <Button compact size='mini' floated='right' icon={{name: 'edit'}} />
-            <Button compact size='mini' floated='right' icon={{name: 'trash alternate'}} />
+            <Button compact size='mini' floated='right' icon={{ name: 'edit' }}/>
+            <Button compact size='mini' floated='right' icon={{ name: 'trash alternate' }}/>
           </Card.Content>
+          }
         </Card>
       </Grid.Column>
     )
@@ -54,8 +57,9 @@ const mapDispatchToProps = dispatch => ({
   onLabelClicked: value => dispatch(filterByLabel(value)),
 })
 
-const mapStateToProps = ({ filter }) => ({
-  freetext: filter.freetext
+const mapStateToProps = ({ filter, auth }) => ({
+  freetext: filter.freetext,
+  auth
 })
 
 RecipeCard.propTypes = {

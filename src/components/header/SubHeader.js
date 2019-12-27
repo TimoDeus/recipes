@@ -15,7 +15,7 @@ const SubHeader = props => {
   const { onResetFilter, filter, recipes } = props
   const activeTab = filter.type
   const hasFilter = filter.labels.length || filter.freetext
-  const isNotAuthenticated = !props.auth.token
+  const isAuthenticated = Boolean(props.auth.token)
   return (
     <Container>
       <Menu tabular>
@@ -32,11 +32,12 @@ const SubHeader = props => {
           </Menu.Menu>
         )}
         <Menu.Menu position='right'>
-          <Menu.Item>
+          {isAuthenticated && <Menu.Item>
             <Link to="/addRecipe">Hinzufügen</Link>
           </Menu.Item>
+          }
           <Menu.Item>
-            {isNotAuthenticated ? <Login/> : <Logout/>}
+            {!isAuthenticated ? <Login/> : <Logout/>}
           </Menu.Item>
         </Menu.Menu>
       </Menu>
