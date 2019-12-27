@@ -12,7 +12,6 @@ const loadAllRecipes = () => {
 }
 
 export const fetchRecipes = () => dispatch => {
-  console.log("fetching recipes")
   return loadAllRecipes().then(
     res => dispatch({
       type: FETCH_RECIPES,

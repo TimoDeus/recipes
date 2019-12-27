@@ -40,6 +40,10 @@ class RecipeCard extends Component {
             </Card.Meta>
             {this.wrapSearchText(recipe.shortDescription)}
           </Card.Content>
+          <Card.Content extra>
+            <Button compact size='mini' floated='right' icon={{name: 'edit'}} />
+            <Button compact size='mini' floated='right' icon={{name: 'trash alternate'}} />
+          </Card.Content>
         </Card>
       </Grid.Column>
     )

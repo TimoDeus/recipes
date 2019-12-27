@@ -6,6 +6,8 @@ import * as PropTypes from 'prop-types'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
 import { messages } from '../../utils/messages'
 import { Link } from 'react-router-dom'
+import Login from '../auth/Login'
+import Logout from '../auth/Logout'
 
 const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 
@@ -13,6 +15,7 @@ const SubHeader = props => {
   const { onResetFilter, filter, recipes } = props
   const activeTab = filter.type
   const hasFilter = filter.labels.length || filter.freetext
+  const isNotAuthenticated = !props.auth.token
   return (
     <Container>
       <Menu tabular>
@@ -32,6 +35,9 @@ const SubHeader = props => {
           <Menu.Item>
             <Link to="/addRecipe">Hinzufügen</Link>
           </Menu.Item>
+          <Menu.Item>
+            {isNotAuthenticated ? <Login/> : <Logout/>}
+          </Menu.Item>
         </Menu.Menu>
       </Menu>
     </Container>
@@ -43,9 +49,10 @@ const mapDispatchToProps = dispatch => ({
   onTypeSelected: type => () => dispatch(filterByType(type)),
 })
 
-const mapStateToProps = ({ filter, recipes }) => ({
+const mapStateToProps = ({ filter, recipes, auth }) => ({
   filter,
-  recipes
+  recipes,
+  auth
 })
 
 SubHeader.propTypes = {
