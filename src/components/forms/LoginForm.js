@@ -16,7 +16,7 @@ class LoginForm extends Component {
       <Form onSubmit={handleSubmit} forceUnregisterOnUnmount={true}>
         <TextField name="name" label="Benutzername"/>
         <TextField type='password' name="password" label="Passwort"/>
-        <Button type='submit' disabled={submitting}>Submit</Button>
+        <Button type='submit' disabled={submitting} loading={submitting}>Submit</Button>
       </Form>
     )
   }

@@ -31,7 +31,7 @@ class CreateRecipeForm extends Component {
             <LabelSelector name="labels" label="Labels" labels={labels} onAddLabel={addLabel}/>
             {/*<Field name="labels" label="Labels" component={renderField} type="text"/>*/}
             {/*<Field name="type" label="Kategorie" component={renderField} type="text"/>*/}
-            <Button type='submit' disabled={submitting}>Submit</Button>
+            <Button type='submit' disabled={submitting} loading={submitting}>Submit</Button>
           </Form>
         </Container>
       )
