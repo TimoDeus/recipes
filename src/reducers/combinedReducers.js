@@ -2,13 +2,13 @@ import { combineReducers } from 'redux'
 import recipes from './recipes'
 import filter from './filter'
 import auth from './auth'
-import labels from './labels'
+import tags from './tags'
 import { reducer as formReducer } from 'redux-form'
 
 const combinedReducers = combineReducers({
   recipes,
   filter,
-  labels,
+  tags,
   auth,
   form: formReducer
 })

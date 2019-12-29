@@ -3,9 +3,9 @@ import { Form } from 'semantic-ui-react'
 import { Field } from 'redux-form'
 import * as PropTypes from 'prop-types'
 
-class LabelSelector extends Component {
+class TagSelector extends Component {
 
-  handleAddition = (e, { value }) => this.props.onAddLabel(value)
+  handleAddition = (e, { value }) => this.props.onAddTag(value)
 
   handleChange = inputOnChange => (e, { value }) => inputOnChange(value)
 
@@ -14,14 +14,14 @@ class LabelSelector extends Component {
   renderDropdown = fieldProps => {
 
     const { input, meta: { touched, invalid, error }, ...custom } = fieldProps
-    const { label, labels } = this.props
+    const { label, tags } = this.props
     return <Form.Dropdown
       {...input}
       {...custom}
       label={label}
       placeholder={label}
       error={touched && invalid && error && { content: error }}
-      options={convertLabelsToOptions(labels)}
+      options={convertTagsToOptions(tags)}
       search
       selection
       multiple
@@ -38,18 +38,18 @@ class LabelSelector extends Component {
   }
 }
 
-const convertLabelsToOptions = (labels = []) => {
-  return labels.reduce((aggr, curr) => {
+const convertTagsToOptions = (tags = []) => {
+  return tags.reduce((aggr, curr) => {
     aggr.push({key: curr, value: curr, text: curr})
     return aggr
   }, [])
 }
 
-LabelSelector.propTypes = {
-  onAddLabel: PropTypes.func.isRequired,
-  labels: PropTypes.array.isRequired,
+TagSelector.propTypes = {
+  onAddTag: PropTypes.func.isRequired,
+  tags: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired
 }
 
-export default LabelSelector
+export default TagSelector

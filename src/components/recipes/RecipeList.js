@@ -29,8 +29,8 @@ class RecipeList extends Component {
   }
 }
 
-const filterByLabel = (recipes, selectedLabels) =>
-  recipes ? recipes.filter(recipe => selectedLabels.every(label => recipe.labels.includes(label))) : []
+const filterByTag = (recipes, selectedTags) =>
+  recipes ? recipes.filter(recipe => selectedTags.every(tag => recipe.tags.includes(tag))) : []
 
 const filterByFreetext = (recipes, value) => {
   if (!recipes) return []
@@ -38,14 +38,14 @@ const filterByFreetext = (recipes, value) => {
   return recipes.filter(e =>
     e.title.toUpperCase().match(freetext) ||
     e.shortDescription.toUpperCase().match(freetext) ||
-    e.labels.some(label => label.toUpperCase().match(freetext))
+    e.tags.some(tag => tag.toUpperCase().match(freetext))
   )
 }
 
 const applyFilter = (allRecipes, filter) => {
   const byType = allRecipes ? allRecipes[filter.type] : []
-  if (filter.labels.length) {
-    return filterByLabel(byType, filter.labels)
+  if (filter.tags.length) {
+    return filterByTag(byType, filter.tags)
   } else if (filter.freetext && filter.freetext.length > 2) {
     return filterByFreetext(byType, filter.freetext)
   } else {
