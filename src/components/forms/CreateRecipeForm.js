@@ -11,6 +11,9 @@ import TextField from './elements/TextField'
 import LabelSelector from './elements/LabelSelector'
 import { addLabel, getLabels } from '../../actions/labels'
 import RichTextEditor from './elements/RichTextEditor'
+import Select from './elements/Select'
+import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
+import { messages } from '../../utils/messages'
 
 class CreateRecipeForm extends Component {
 
@@ -29,15 +32,21 @@ class CreateRecipeForm extends Component {
           <Form onSubmit={handleSubmit}>
             <TextField name="title" label="Titel"/>
             <TextField name="shortDescription" label="Kurzbeschreibung"/>
+            <Select name="type" label="Kategorie" options={getValidCategories()}/>
             <LabelSelector name="labels" label="Labels" labels={labels} onAddLabel={addLabel}/>
             <RichTextEditor name="description" label="Beschreibung"/>
-            {/*<Field name="type" label="Kategorie" component={renderField} type="text"/>*/}
-            <Button type='submit' disabled={submitting} loading={submitting}>Submit</Button>
+            <Button type="submit" disabled={submitting} loading={submitting}>Speichern</Button>
           </Form>
         </Container>
       )
   }
 }
+
+const getValidCategories = () =>
+  [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES].reduce((res, cur) => {
+    res.push({ key: cur, value: cur, text: messages[cur] })
+    return res
+  }, [])
 
 const validate = values => {
   const errors = {}

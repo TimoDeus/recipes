@@ -47,7 +47,7 @@ const convertLabelsToOptions = (labels = []) => {
 
 LabelSelector.propTypes = {
   onAddLabel: PropTypes.func.isRequired,
-  labels: PropTypes.object.isRequired,
+  labels: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired
 }
