@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Container, Form } from 'semantic-ui-react'
 import Header from '../header/Header'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import * as PropTypes from 'prop-types'
 import { addRecipe } from '../../actions/recipes'
@@ -30,8 +30,7 @@ class CreateRecipeForm extends Component {
             <TextField name="title" label="Titel"/>
             <TextField name="shortDescription" label="Kurzbeschreibung"/>
             <LabelSelector name="labels" label="Labels" labels={labels} onAddLabel={addLabel}/>
-            <Field name="description" component={RichTextEditor}/>
-            {/*<Field name="labels" label="Labels" component={renderField} type="text"/>*/}
+            <RichTextEditor name="description" label="Beschreibung"/>
             {/*<Field name="type" label="Kategorie" component={renderField} type="text"/>*/}
             <Button type='submit' disabled={submitting} loading={submitting}>Submit</Button>
           </Form>

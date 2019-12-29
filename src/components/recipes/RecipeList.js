@@ -65,7 +65,7 @@ const mapStateToProps = ({ recipes, filter }) => ({
 RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
   filter: PropTypes.object.isRequired,
-  fetchRecipesIfNeeded: PropTypes.func.isRequired
+  fetchRecipes: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeList)

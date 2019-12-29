@@ -1,35 +1,39 @@
 import React, { Component } from 'react'
 import ReactRTE from 'react-rte'
+import { Field } from 'redux-form'
+import * as PropTypes from 'prop-types'
+
+const contentType = 'html'
+
+const createEditorValue = value => value !== 'undefined' ? ReactRTE.createEmptyValue() : ReactRTE.createValueFromString(value, contentType)
 
 class RichTextEditor extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      value: this.props.input.value === '' ?
-        ReactRTE.createEmptyValue() :
-        ReactRTE.createValueFromString(this.props.input.value, 'html')
+      value: createEditorValue(this.props.value)
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.input.value !== this.state.value.toString('html')) {
-      this.setState({
-        value: nextProps.input.value ?
-          ReactRTE.createValueFromString(nextProps.input.value, 'html') :
-          ReactRTE.createEmptyValue()
-      })
-    }
+  onChange = inputOnChange => value => {
+    this.setState({ value }, () => inputOnChange(value.toString(contentType)))
   }
 
-  onChange (value) {
-    const isTextChanged = this.state.value.toString('html') !== value.toString('html')
-    this.setState({ value }, e => isTextChanged && this.props.input.onChange(value.toString('html')))
-  };
+  renderComponent = fieldProps => {
+    return <ReactRTE value={this.state.value} onChange={this.onChange(fieldProps.input.onChange)}/>
+  }
 
   render () {
-    return <ReactRTE value={this.state.value} onChange={this.onChange.bind(this)}/>
+    const { name, label } = this.props
+    return <Field name={name} label={label} component={this.renderComponent}/>
   }
+}
+
+RichTextEditor.propTypes = {
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string,
 }
 
 export default RichTextEditor
