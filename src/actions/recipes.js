@@ -1,4 +1,4 @@
-import { ADD_RECIPES, FETCH_RECIPES } from './actionTypes'
+import { ADD_RECIPE, DELETE_RECIPE, FETCH_RECIPES } from './actionTypes'
 import axios from 'axios'
 
 const reduceDbResult = ({ data }) => data.reduce((res, cur) => {
@@ -22,9 +22,20 @@ export const fetchRecipes = () => dispatch => {
 const doAddRecipe = data => (dispatch, getState) => {
   return axios.post(process.env.REACT_APP_API_BASE_URL + 'recipes/addRecipe', data, createRequestConfig(getState())).then(
     res => dispatch({
-      type: ADD_RECIPES,
+      type: ADD_RECIPE,
       data: res
     }))
+}
+
+const doDeleteRecipe = recipeId => (dispatch, getState) => {
+  return axios.delete(process.env.REACT_APP_API_BASE_URL + 'recipes/deleteRecipe', createRequestConfig(getState()), {recipeId}).then(
+    ({data}) => {
+      data.recipeId = recipeId
+      dispatch({
+        type: DELETE_RECIPE,
+        data: data
+      })
+    })
 }
 
 const createRequestConfig = state => ({
@@ -34,3 +45,5 @@ const createRequestConfig = state => ({
 })
 
 export const addRecipe = data => dispatch => dispatch(doAddRecipe(data))
+
+export const deleteRecipe = recipeId => dispatch => dispatch(doDeleteRecipe(recipeId))

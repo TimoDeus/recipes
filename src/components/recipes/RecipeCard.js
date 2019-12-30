@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom'
 import { filterByTag } from '../../actions/filter'
 import { connect } from 'react-redux'
 import './RecipeCard.css'
+import { deleteRecipe } from '../../actions/recipes'
+import ConfirmationButton from './ConfirmationButton'
 
 class RecipeCard extends Component {
 
@@ -24,7 +26,7 @@ class RecipeCard extends Component {
   }
 
   render () {
-    const { recipe, onTagClicked, auth } = this.props
+    const { recipe, onTagClicked, auth, onDelete } = this.props
     const isAuthenticated = Boolean(auth.token)
     return (
       <Grid.Column>
@@ -44,7 +46,8 @@ class RecipeCard extends Component {
           {isAuthenticated &&
           <Card.Content extra>
             <Button compact size='mini' floated='right' icon={{ name: 'edit' }}/>
-            <Button compact size='mini' floated='right' icon={{ name: 'trash alternate' }}/>
+            <ConfirmationButton compact size='mini' floated='right' icon={{ name: 'trash alternate' }}
+                                content={`Rezept '${recipe.title}' löschen?`} onConfirm={() => onDelete(recipe._id)}/>
           </Card.Content>
           }
         </Card>
@@ -55,6 +58,7 @@ class RecipeCard extends Component {
 
 const mapDispatchToProps = dispatch => ({
   onTagClicked: value => dispatch(filterByTag(value)),
+  onDelete: recipeId => dispatch(deleteRecipe(recipeId)),
 })
 
 const mapStateToProps = ({ filter, auth }) => ({
@@ -65,6 +69,7 @@ const mapStateToProps = ({ filter, auth }) => ({
 RecipeCard.propTypes = {
   recipe: PropTypes.object.isRequired,
   onTagClicked: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   freetext: PropTypes.string,
 }
 
