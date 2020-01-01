@@ -9,9 +9,10 @@ import reducers from './reducers/combinedReducers'
 import { Provider } from 'react-redux'
 import { logger } from 'redux-logger'
 import thunk from 'redux-thunk'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
 import {createCookieMiddleware, initialState} from './utils/cookieMiddleware';
+import history from "./utils/history";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -25,9 +26,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App/>
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root'))
 registerServiceWorker()

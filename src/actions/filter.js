@@ -14,7 +14,9 @@ export const filterByTags = tags => dispatch =>
     dispatch(updateTags(tags))
   ])
 
-export const filterByType = data => dispatch => dispatch({ type: FILTER_BY_TYPE, data })
+export const filterByType = data => dispatch => {
+  return dispatch({ type: FILTER_BY_TYPE, data })
+}
 
 const getRecipesByQuery = query => dispatch =>
   axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipesByQuery', { params: { query } })
