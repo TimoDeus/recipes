@@ -11,8 +11,8 @@ import ConfirmationButton from './ConfirmationButton'
 class RecipeCard extends Component {
 
   wrapSearchText (text) {
-    const { freetext } = this.props
-    const value = freetext && freetext.length > 2 ? text.replace(new RegExp('(' + freetext.trim() + ')', 'gi'), '<em>$1</em>') : text
+    const { query } = this.props
+    const value = query && query.length > 2 ? text.replace(new RegExp('(' + query.trim() + ')', 'gi'), '<em>$1</em>') : text
     return <span dangerouslySetInnerHTML={{ __html: value }}/>
   }
 
@@ -62,7 +62,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = ({ filter, auth }) => ({
-  freetext: filter.freetext,
+  query: filter.query,
   auth
 })
 
@@ -70,7 +70,7 @@ RecipeCard.propTypes = {
   recipe: PropTypes.object.isRequired,
   onTagClicked: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  freetext: PropTypes.string,
+  query: PropTypes.string,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeCard))

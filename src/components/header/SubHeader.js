@@ -14,7 +14,7 @@ const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 const SubHeader = props => {
   const { onResetFilter, filter, recipes } = props
   const activeTab = filter.type
-  const hasFilter = filter.tags.length || filter.freetext
+  const hasFilter = filter.tags.length || filter.query
   const isAuthenticated = Boolean(props.auth.token)
   return (
     <Container>

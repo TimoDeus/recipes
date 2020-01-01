@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Icon, Input, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { filterByFreetext } from '../../actions/filter'
+import { filterByQuery } from '../../actions/filter'
 import * as PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
@@ -19,7 +19,7 @@ const Header = props => {
         {showSearch && (
           <Menu.Menu position='right'>
             <Menu.Item>
-              <Input icon='search' placeholder='Suche...' onChange={props.onSearch} value={filter.freetext || ''}/>
+              <Input icon='search' placeholder='Suche...' onChange={props.onSearch} value={filter.query || ''}/>
             </Menu.Item>
           </Menu.Menu>
         )}
@@ -29,7 +29,7 @@ const Header = props => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSearch: e => dispatch(filterByFreetext(e.target.value)),
+  onSearch: e => dispatch(filterByQuery(e.target.value)),
 })
 
 const mapStateToProps = ({ filter, recipes }) => ({

@@ -1,15 +1,9 @@
 import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RESET_RECIPE } from './actionTypes'
 import axios from 'axios'
-import { reduceDbResult } from '../utils/dbUtils'
-
-const loadAllRecipes = () => {
-  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes')
-    .then(reduceDbResult)
-}
 
 export const fetchRecipes = () => dispatch => {
-  return loadAllRecipes().then(
-    data => dispatch({
+  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes').then(
+    ({ data }) => dispatch({
       type: FETCH_RECIPES,
       data
     }))
