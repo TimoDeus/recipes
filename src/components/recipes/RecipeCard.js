@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Card, Grid, Placeholder } from 'semantic-ui-react'
+import { Button, Card, Grid, Icon, Placeholder } from 'semantic-ui-react'
 import * as PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { filterByTag } from '../../actions/filter'
 import { connect } from 'react-redux'
 import './RecipeCard.css'
@@ -45,7 +45,7 @@ class RecipeCard extends Component {
           </Card.Content>
           {isAuthenticated &&
           <Card.Content extra>
-            <Button compact size='mini' floated='right' icon={{ name: 'edit' }}/>
+            <Link to={`/editRecipe/${recipe._id}`}><Icon name="edit" /></Link>
             <ConfirmationButton compact size='mini' floated='right' icon={{ name: 'trash alternate' }}
                                 content={`Rezept '${recipe.title}' löschen?`} onConfirm={() => onDelete(recipe._id)}/>
           </Card.Content>

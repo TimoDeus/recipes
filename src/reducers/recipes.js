@@ -1,5 +1,4 @@
 import { DELETE_RECIPE, FETCH_RECIPES } from '../actions/actionTypes'
-import 'core-js'
 
 const initialState = {}
 

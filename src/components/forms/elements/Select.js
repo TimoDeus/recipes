@@ -12,6 +12,7 @@ const renderSelect = ({ label, input, options }) =>
   <Form.Select
     label={label}
     options={options}
+    value={input.value}
     onChange={handleChange(input.onChange)}
   />
 

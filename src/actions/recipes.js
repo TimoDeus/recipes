@@ -1,4 +1,4 @@
-import { ADD_RECIPE, DELETE_RECIPE, FETCH_RECIPES } from './actionTypes'
+import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES } from './actionTypes'
 import axios from 'axios'
 
 const reduceDbResult = ({ data }) => data.reduce((res, cur) => {
@@ -27,9 +27,18 @@ const doAddRecipe = data => (dispatch, getState) => {
     }))
 }
 
+const doEditRecipe = (recipeId, data) => (dispatch, getState) => {
+  return axios.patch(process.env.REACT_APP_API_BASE_URL + 'recipes/editRecipe', data, createRequestConfig(getState())).then(
+    () => dispatch({
+      type: EDIT_RECIPE,
+      data: { ...data, ...{ _id: recipeId } }
+    })
+  )
+}
+
 const doDeleteRecipe = recipeId => (dispatch, getState) => {
-  return axios.delete(process.env.REACT_APP_API_BASE_URL + 'recipes/deleteRecipe', createRequestConfig(getState()), {recipeId}).then(
-    ({data}) => {
+  return axios.delete(process.env.REACT_APP_API_BASE_URL + 'recipes/deleteRecipe', createRequestConfig(getState()), { recipeId }).then(
+    ({ data }) => {
       data.recipeId = recipeId
       dispatch({
         type: DELETE_RECIPE,
@@ -47,3 +56,14 @@ const createRequestConfig = state => ({
 export const addRecipe = data => dispatch => dispatch(doAddRecipe(data))
 
 export const deleteRecipe = recipeId => dispatch => dispatch(doDeleteRecipe(recipeId))
+
+export const editRecipe = (recipeId, data) => dispatch => dispatch(doEditRecipe(recipeId, data))
+
+const loadRecipe = recipeId => axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipeById', { params: { recipeId } })
+
+export const fetchRecipe = recipeId => dispatch =>
+  loadRecipe(recipeId).then(
+    ({ data }) => dispatch({
+      type: FETCH_RECIPE,
+      data
+    }))
