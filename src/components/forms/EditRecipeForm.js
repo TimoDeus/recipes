@@ -12,14 +12,13 @@ class EditRecipeForm extends Component {
   }
 
   render () {
-    const { onSubmit, match } = this.props
-    const recipeId = match.params.recipeId
-    return <RecipeForm onSubmit={onSubmit(recipeId)} formId="edit"/>
+    const { onSubmit } = this.props
+    return <RecipeForm onSubmit={onSubmit} formId="edit"/>
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: recipeId => data => dispatch(editRecipe(recipeId, data)),
+  onSubmit: data => dispatch(editRecipe(data)),
   getRecipe: recipeId => dispatch(fetchRecipe(recipeId))
 })
 
