@@ -8,7 +8,9 @@ export const RESET_RECIPE = 'RESET_RECIPE'
 export const FETCH_TAGS = 'FETCH_TAGS'
 export const ADD_TAG = 'ADD_TAG'
 
-export const FILTER_BY_TAG = 'FILTER_BY_TAG'
+export const FILTER_BY_TAGS = 'FILTER_BY_TAGS'
+export const ADD_TO_TAGS = 'ADD_TO_TAGS'
+export const REMOVE_FROM_TAGS = 'REMOVE_FROM_TAGS'
 
 export const FILTER_BY_TYPE = 'FILTER_BY_TYPE'
 export const FILTER_BY_FREETEXT = 'FILTER_BY_FREETEXT'

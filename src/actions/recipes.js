@@ -1,10 +1,6 @@
 import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RESET_RECIPE } from './actionTypes'
 import axios from 'axios'
-
-const reduceDbResult = ({ data }) => data.reduce((res, cur) => {
-  res[cur._id] = cur.recipes
-  return res
-}, {})
+import { reduceDbResult } from '../utils/dbUtils'
 
 const loadAllRecipes = () => {
   return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes')
@@ -13,9 +9,9 @@ const loadAllRecipes = () => {
 
 export const fetchRecipes = () => dispatch => {
   return loadAllRecipes().then(
-    res => dispatch({
+    data => dispatch({
       type: FETCH_RECIPES,
-      data: res
+      data
     }))
 }
 

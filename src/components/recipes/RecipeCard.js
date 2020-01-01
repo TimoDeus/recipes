@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Card, Grid, Icon, Placeholder } from 'semantic-ui-react'
 import * as PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import { filterByTag } from '../../actions/filter'
+import { filterByTags } from '../../actions/filter'
 import { connect } from 'react-redux'
 import './RecipeCard.css'
 import { deleteRecipe } from '../../actions/recipes'
@@ -57,7 +57,7 @@ class RecipeCard extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onTagClicked: value => dispatch(filterByTag(value)),
+  onTagClicked: value => dispatch(filterByTags(value)),
   onDelete: recipeId => dispatch(deleteRecipe(recipeId)),
 })
 
