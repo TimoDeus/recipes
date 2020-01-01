@@ -25,8 +25,7 @@ class RichTextEditor extends Component {
   }
 
   onChange = value => {
-    const isTextChanged = this.state.value.toString('html') !== value.toString(contentType)
-    this.setState({ value }, () => isTextChanged && this.props.input.onChange(value.toString(contentType)))
+    this.setState({ value }, () => this.props.input.onChange(value.toString(contentType)))
   }
 
   render () {
