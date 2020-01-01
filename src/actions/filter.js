@@ -1,4 +1,4 @@
-import { ADD_TO_TAGS, FILTER_BY_QUERY, FILTER_BY_TAGS, FILTER_BY_TYPE, RESET_FILTER, SET_QUERY } from './actionTypes'
+import { ADD_TO_TAGS, FILTER_BY_QUERY, FILTER_BY_TAGS, RESET_FILTER, SET_QUERY } from './actionTypes'
 import axios from 'axios'
 import { fetchRecipes } from './recipes'
 
@@ -13,10 +13,6 @@ export const filterByTags = tags => dispatch =>
     dispatch(getRecipesByTags(tags)),
     dispatch(updateTags(tags))
   ])
-
-export const filterByType = data => dispatch => {
-  return dispatch({ type: FILTER_BY_TYPE, data })
-}
 
 const getRecipesByQuery = query => dispatch =>
   axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipesByQuery', { params: { query } })

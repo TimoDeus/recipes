@@ -6,6 +6,9 @@ import { fetchRecipes } from '../../actions/recipes'
 import * as PropTypes from 'prop-types'
 import Header from '../header/Header'
 import SubHeader from '../header/SubHeader'
+import { withRouter } from 'react-router-dom'
+import { TYPE_MAIN } from '../../utils/constants'
+import qs from 'qs'
 
 class RecipeList extends Component {
 
@@ -13,9 +16,14 @@ class RecipeList extends Component {
     this.props.fetchRecipes()
   }
 
+  getActiveTab = () => {
+    const { location: { search } } = this.props
+    return qs.parse(search.substr(1)).type || TYPE_MAIN
+  }
+
   render () {
-    const { recipes, filter } = this.props
-    const toDisplay = recipes[filter.type] || []
+    const { recipes } = this.props
+    const toDisplay = recipes[this.getActiveTab()] || []
     return (
       <Container>
         <Header/>
@@ -34,15 +42,13 @@ const mapDispatchToProps = dispatch => ({
   fetchRecipes: () => dispatch(fetchRecipes())
 })
 
-const mapStateToProps = ({ recipes, filter }) => ({
-  recipes,
-  filter
+const mapStateToProps = ({ recipes }) => ({
+  recipes
 })
 
 RecipeList.propTypes = {
   recipes: PropTypes.object.isRequired,
-  filter: PropTypes.object.isRequired,
   fetchRecipes: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeList))

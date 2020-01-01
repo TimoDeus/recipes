@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { Container } from 'semantic-ui-react'
-import { Route, Switch } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 import RecipeList from './recipes/RecipeList'
 import NotFoundPage from './NotFoundPage'
 import CreateRecipeForm from './forms/CreateRecipeForm'

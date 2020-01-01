@@ -12,7 +12,7 @@ import thunk from 'redux-thunk'
 import { Router } from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
 import {createCookieMiddleware, initialState} from './utils/cookieMiddleware';
-import history from "./utils/history";
+import { createBrowserHistory } from "history";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -26,7 +26,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router history={createBrowserHistory()}>
       <App/>
     </Router>
   </Provider>,
