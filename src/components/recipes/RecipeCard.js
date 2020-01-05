@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import { Button, Card, Grid, Icon, Placeholder } from 'semantic-ui-react'
 import * as PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import { filterByTags } from '../../actions/filter'
 import { connect } from 'react-redux'
 import './RecipeCard.css'
-import { deleteRecipe } from '../../actions/recipes'
+import { deleteRecipe, fetchRecipes } from '../../actions/recipes'
 import ConfirmationButton from './ConfirmationButton'
-import { getQueryParamsFromLocation } from '../../utils/queryString'
+import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 
 class RecipeCard extends Component {
 
@@ -18,17 +17,34 @@ class RecipeCard extends Component {
     return <span dangerouslySetInnerHTML={{ __html: value }}/>
   }
 
-  printTags (tags, clickHandler) {
+  tagClickHandler = value => () => {
+    const { history, location } = this.props
+    const queryParams = getQueryParamsFromLocation(location)
+    let { tags = [] } = queryParams
+    if (!Array.isArray(tags)) {
+      tags = [tags]
+    }
+    if (!tags.includes(value)) {
+      tags.push(value)
+    } else {
+      tags = tags.filter(t => t !== value)
+    }
+    queryParams.tags = tags
+    history.push(`${location.pathname}?${stringifyQueryParams(queryParams)}`)
+    this.props.onTagClicked(queryParams)
+  }
+
+  printTags = tags => {
     return tags.map(s => s.trim())
       .map((value, idx) =>
-        <Button key={idx} size='mini' compact onClick={() => clickHandler(value)}>
+        <Button key={idx} size='mini' compact onClick={this.tagClickHandler(value)}>
           {this.wrapSearchText(value)}
         </Button>
       )
   }
 
   render () {
-    const { recipe, onTagClicked, auth, onDelete } = this.props
+    const { recipe, auth, onDelete } = this.props
     const isAuthenticated = Boolean(auth.token)
     return (
       <Grid.Column>
@@ -41,7 +57,7 @@ class RecipeCard extends Component {
               {this.wrapSearchText(recipe.title)}
             </Card.Header>
             <Card.Meta>
-              {this.printTags(recipe.tags, onTagClicked)}
+              {this.printTags(recipe.tags)}
             </Card.Meta>
             {this.wrapSearchText(recipe.shortDescription)}
           </Card.Content>
@@ -58,13 +74,12 @@ class RecipeCard extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onTagClicked: value => dispatch(filterByTags(value)),
+const mapDispatchToProps = (dispatch) => ({
+  onTagClicked: params => dispatch(fetchRecipes(params)),
   onDelete: recipeId => dispatch(deleteRecipe(recipeId)),
 })
 
-const mapStateToProps = ({ filter, auth }) => ({
-  query: filter.query,
+const mapStateToProps = ({ auth }) => ({
   auth
 })
 
@@ -72,7 +87,6 @@ RecipeCard.propTypes = {
   recipe: PropTypes.object.isRequired,
   onTagClicked: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  query: PropTypes.string,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeCard))

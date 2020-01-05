@@ -3,8 +3,7 @@ import { Container, Icon, Input, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import * as PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
-import qs from 'qs'
-import { getQueryParamsFromLocation } from '../../utils/queryString'
+import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 import { fetchRecipes } from '../../actions/recipes'
 
 class Header extends React.Component {
@@ -26,7 +25,7 @@ class Header extends React.Component {
     const { history, location } = this.props
     const queryParams = getQueryParamsFromLocation(location)
     queryParams.query = value && value.length ? value : undefined
-    history.push(`${location.pathname}?${qs.stringify(queryParams)}`)
+    history.push(`${location.pathname}?${stringifyQueryParams(queryParams)}`)
     this.setState({ query: value })
     this.props.updateFilter(value)
   }
