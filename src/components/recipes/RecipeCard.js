@@ -7,11 +7,13 @@ import { connect } from 'react-redux'
 import './RecipeCard.css'
 import { deleteRecipe } from '../../actions/recipes'
 import ConfirmationButton from './ConfirmationButton'
+import { getQueryParamsFromLocation } from '../../utils/queryString'
 
 class RecipeCard extends Component {
 
   wrapSearchText (text) {
-    const { query } = this.props
+    const { location } = this.props
+    const { query } = getQueryParamsFromLocation(location)
     const value = query && query.length > 2 ? text.replace(new RegExp('(' + query.trim() + ')', 'gi'), '<em>$1</em>') : text
     return <span dangerouslySetInnerHTML={{ __html: value }}/>
   }
@@ -45,7 +47,7 @@ class RecipeCard extends Component {
           </Card.Content>
           {isAuthenticated &&
           <Card.Content extra>
-            <Link to={`/editRecipe/${recipe._id}`}><Icon name="edit" /></Link>
+            <Link to={`/editRecipe/${recipe._id}`}><Icon name="edit"/></Link>
             <ConfirmationButton compact size='mini' floated='right' icon={{ name: 'trash alternate' }}
                                 content={`Rezept '${recipe.title}' löschen?`} onConfirm={() => onDelete(recipe._id)}/>
           </Card.Content>

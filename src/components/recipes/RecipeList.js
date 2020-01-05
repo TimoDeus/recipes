@@ -8,19 +8,17 @@ import Header from '../header/Header'
 import SubHeader from '../header/SubHeader'
 import { withRouter } from 'react-router-dom'
 import { TYPE_MAIN } from '../../utils/constants'
-import qs from 'qs'
+import { getQueryParamsFromLocation } from '../../utils/queryString'
 
 class RecipeList extends Component {
 
   componentDidMount () {
-    const { location: { search } } = this.props
-    const queryParams = qs.parse(search.substr(1))
-    this.props.fetchRecipes(queryParams)
+    this.props.fetchRecipes()
   }
 
   getActiveTab = () => {
-    const { location: { search } } = this.props
-    return qs.parse(search.substr(1)).type || TYPE_MAIN
+    const { location } = this.props
+    return getQueryParamsFromLocation(location).type || TYPE_MAIN
   }
 
   render () {
@@ -40,8 +38,8 @@ class RecipeList extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  fetchRecipes: params => dispatch(fetchRecipes(params))
+const mapDispatchToProps = (dispatch, { location }) => ({
+  fetchRecipes: () => dispatch(fetchRecipes(getQueryParamsFromLocation(location)))
 })
 
 const mapStateToProps = ({ recipes }) => ({

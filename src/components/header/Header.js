@@ -1,12 +1,11 @@
 import React from 'react'
 import { Container, Icon, Input, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { filterByQuery } from '../../actions/filter'
 import * as PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import qs from 'qs'
-
-const MIN_QUERY_LENGTH = 3
+import { getQueryParamsFromLocation } from '../../utils/queryString'
+import { fetchRecipes } from '../../actions/recipes'
 
 class Header extends React.Component {
 
@@ -14,18 +13,20 @@ class Header extends React.Component {
     query: undefined
   }
 
-  componentDidMount () {
-    const { location: { search } } = this.props
-    const queryParams = qs.parse(search.substr(1))
-    this.setState({ query: queryParams.query })
-    this.props.updateFilter(queryParams.query)
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    const { location } = this.props
+    const { query } = getQueryParamsFromLocation(location)
+    if (prevState.query !== query) {
+      this.setState({ query })
+      this.props.updateFilter(query)
+    }
   }
 
   handleSearch = ({ target: { value } }) => {
-    const { history, location: { pathname, search } } = this.props
-    const queryParams = qs.parse(search.substr(1))
+    const { history, location } = this.props
+    const queryParams = getQueryParamsFromLocation(location)
     queryParams.query = value && value.length ? value : undefined
-    history.push(`${pathname}?${qs.stringify(queryParams)}`)
+    history.push(`${location.pathname}?${qs.stringify(queryParams)}`)
     this.setState({ query: value })
     this.props.updateFilter(value)
   }
@@ -55,12 +56,8 @@ class Header extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateFilter: query => {
-    if (query && query.length >= MIN_QUERY_LENGTH) {
-      dispatch(filterByQuery(query))
-    }
-  }
+const mapDispatchToProps = (dispatch, { location }) => ({
+  updateFilter: () => dispatch(fetchRecipes(getQueryParamsFromLocation(location)))
 })
 
 const mapStateToProps = ({ recipes }) => ({

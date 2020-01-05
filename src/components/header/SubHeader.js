@@ -9,21 +9,22 @@ import { Link, withRouter } from 'react-router-dom'
 import Login from '../auth/Login'
 import Logout from '../auth/Logout'
 import qs from 'qs'
+import { getQueryParamsFromLocation } from '../../utils/queryString'
 
 const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 
 class SubHeader extends React.Component {
 
   handleTypeChange = type => () => {
-    const { history, location: { pathname, search } } = this.props
-    const queryParams = qs.parse(search.substr(1))
+    const { history, location } = this.props
+    const queryParams = getQueryParamsFromLocation(location)
     queryParams.type = type
-    history.push(`${pathname}?${qs.stringify(queryParams)}`)
+    history.push(`${location.pathname}?${qs.stringify(queryParams)}`)
   }
 
   getActiveTab = () => {
-    const { location: { search } } = this.props
-    return qs.parse(search.substr(1)).type || TYPE_MAIN
+    const { location } = this.props
+    return getQueryParamsFromLocation(location).type || TYPE_MAIN
   }
 
   render () {
