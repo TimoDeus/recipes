@@ -6,11 +6,13 @@ import RecipeList from './recipes/RecipeList'
 import NotFoundPage from './NotFoundPage'
 import CreateRecipeForm from './forms/CreateRecipeForm'
 import EditRecipeForm from './forms/EditRecipeForm'
+import HeaderContainer from '../container/header/HeaderContainer'
 
 class App extends Component {
   render () {
     return (
       <Container>
+        <HeaderContainer />
         <Switch>
           <Route exact path="/" component={RecipeList}/>
           <Route path="/addRecipe" component={CreateRecipeForm}/>

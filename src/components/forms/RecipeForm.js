@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Container, Form } from 'semantic-ui-react'
-import Header from '../header/Header'
+import { Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'redux'
@@ -22,17 +21,14 @@ class RecipeForm extends Component {
   render () {
     const { handleSubmit, submitting, tags, addTag } = this.props
     return (
-      <Container>
-        <Header showSearch={false}/>
-        <Form onSubmit={handleSubmit}>
-          <TextField name="title" label="Titel"/>
-          <TextField name="shortDescription" label="Kurzbeschreibung"/>
-          <Select name="type" label="Kategorie" options={getValidCategories()}/>
-          <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
-          <Field name="description" label="Beschreibung" component={RichTextEditor}/>
-          <Button type="submit" disabled={submitting} loading={submitting}>Speichern</Button>
-        </Form>
-      </Container>
+      <Form onSubmit={handleSubmit}>
+        <TextField name="title" label="Titel"/>
+        <TextField name="shortDescription" label="Kurzbeschreibung"/>
+        <Select name="type" label="Kategorie" options={getValidCategories()}/>
+        <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
+        <Field name="description" label="Beschreibung" component={RichTextEditor}/>
+        <Button type="submit" disabled={submitting} loading={submitting}>Speichern</Button>
+      </Form>
     )
   }
 }

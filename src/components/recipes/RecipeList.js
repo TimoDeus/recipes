@@ -4,7 +4,6 @@ import RecipeCard from './RecipeCard'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../../actions/recipes'
 import * as PropTypes from 'prop-types'
-import Header from '../header/Header'
 import SubHeader from '../header/SubHeader'
 import { withRouter } from 'react-router-dom'
 import { TYPE_MAIN } from '../../utils/constants'
@@ -26,7 +25,6 @@ class RecipeList extends Component {
     const toDisplay = recipes[this.getActiveTab()] || []
     return (
       <Container>
-        <Header/>
         <SubHeader/>
         <Grid stackable columns={2}>
           {toDisplay.map(recipe =>
