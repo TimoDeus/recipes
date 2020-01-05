@@ -1,8 +1,11 @@
 import reduxCookiesMiddleware, {getStateFromCookies} from 'redux-cookies-middleware';
 import Cookies from 'js-cookie'
 
-const paths = {'auth.token': {name: 'access_token'}};
-const emptyState = {auth: {token: undefined}};
+const paths = {
+  'auth.token': {name: 'access_token'},
+  'auth.username': {name: 'username'},
+};
+const emptyState = {auth: {token: undefined, username: undefined}};
 const options = {
   setCookie: (name, value) => Cookies.set(name, value, { expires: 1, path: '/', secure: false })
 }

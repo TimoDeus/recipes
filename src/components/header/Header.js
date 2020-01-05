@@ -5,13 +5,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
-import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import MailIcon from '@material-ui/icons/Mail'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -79,6 +78,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = props => {
+  const { handleSearch, username } = props
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -93,26 +93,22 @@ const Header = props => {
   }
 
   const mobileMenuId = 'menu-mobile'
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon/>
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-    </Menu>
-  )
+  const renderMobileMenu = props => {
+    const { username } = props
+    const userAction = username ? 'Logout' : 'Login'
+    return (<Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        id={mobileMenuId}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isMobileMenuOpen}
+        onClose={handleMobileMenuClose}
+      >
+        <MenuItem>{userAction}</MenuItem>
+      </Menu>
+    )
+  }
 
   return (
     <div className={classes.grow}>
@@ -123,6 +119,7 @@ const Header = props => {
               Rezepte
             </Typography>
           </Link>
+          <div className={classes.grow}/>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon/>
@@ -134,16 +131,11 @@ const Header = props => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              onChange={props.handleSearch}
+              onChange={handleSearch}
             />
           </div>
-          <div className={classes.grow}/>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon/>
-              </Badge>
-            </IconButton>
+            <Button color="inherit">{username ? 'Logout' : 'Login'}</Button>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -158,7 +150,7 @@ const Header = props => {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      {renderMobileMenu(props)}
     </div>
   )
 }

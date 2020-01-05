@@ -33,6 +33,7 @@ class HeaderContainer extends React.Component {
   render () {
     return <Header
       handleSearch={this.handleSearch}
+      username={this.props.username}
     />
   }
 }
@@ -41,12 +42,14 @@ const mapDispatchToProps = (dispatch, { location }) => ({
   updateFilter: () => dispatch(fetchRecipes(getQueryParamsFromLocation(location)))
 })
 
-const mapStateToProps = ({ recipes }) => ({
-  recipes
+const mapStateToProps = ({ recipes, auth: { username } }) => ({
+  recipes,
+  username
 })
 
 HeaderContainer.propTypes = {
-  updateFilter: PropTypes.func.isRequired
+  updateFilter: PropTypes.func.isRequired,
+  username: PropTypes.string
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer))
