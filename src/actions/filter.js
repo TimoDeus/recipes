@@ -1,4 +1,4 @@
-import { ADD_TO_TAGS, FILTER_BY_QUERY, FILTER_BY_TAGS, RESET_FILTER, SET_QUERY } from './actionTypes'
+import { ADD_TO_TAGS, FILTER_BY_QUERY, FILTER_BY_TAGS, RESET_FILTER } from './actionTypes'
 import axios from 'axios'
 import { fetchRecipes } from './recipes'
 
@@ -18,13 +18,7 @@ const getRecipesByQuery = query => dispatch =>
   axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipesByQuery', { params: { query } })
     .then(({ data }) => dispatch({ type: FILTER_BY_QUERY, data }))
 
-const updateQuery = query => ({ type: SET_QUERY, data: query })
-
-export const filterByQuery = query => dispatch =>
-  Promise.all([
-    dispatch(getRecipesByQuery(query)),
-    dispatch(updateQuery(query))
-  ])
+export const filterByQuery = query => dispatch => dispatch(getRecipesByQuery(query))
 
 export const resetFilter = () => dispatch =>
   Promise.all([

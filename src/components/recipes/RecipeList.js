@@ -13,7 +13,9 @@ import qs from 'qs'
 class RecipeList extends Component {
 
   componentDidMount () {
-    this.props.fetchRecipes()
+    const { location: { search } } = this.props
+    const queryParams = qs.parse(search.substr(1))
+    this.props.fetchRecipes(queryParams)
   }
 
   getActiveTab = () => {
@@ -39,7 +41,7 @@ class RecipeList extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchRecipes: () => dispatch(fetchRecipes())
+  fetchRecipes: params => dispatch(fetchRecipes(params))
 })
 
 const mapStateToProps = ({ recipes }) => ({

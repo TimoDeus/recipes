@@ -1,8 +1,9 @@
 import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RESET_RECIPE } from './actionTypes'
 import axios from 'axios'
 
-export const fetchRecipes = () => dispatch => {
-  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes').then(
+export const fetchRecipes = params => dispatch => {
+
+  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes', { params }).then(
     ({ data }) => dispatch({
       type: FETCH_RECIPES,
       data
