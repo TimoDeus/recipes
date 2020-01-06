@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = props => {
-  const { handleSearch, username, query, openLoginDialog } = props
+  const { handleSearch, username, query, openLoginDialog, onLogout } = props
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -95,7 +95,6 @@ const Header = props => {
   const mobileMenuId = 'menu-mobile'
   const renderMobileMenu = props => {
     const { username } = props
-    const userAction = username ? 'Logout' : 'Login'
     return (<Menu
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -105,7 +104,10 @@ const Header = props => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
       >
-        <MenuItem onClick={openLoginDialog}>{userAction}</MenuItem>
+        {username ?
+          <MenuItem onClick={onLogout}>Logout</MenuItem> :
+          <MenuItem onClick={openLoginDialog}>Login</MenuItem>
+        }
       </Menu>
     )
   }
@@ -136,7 +138,10 @@ const Header = props => {
             />
           </div>
           <div className={classes.sectionDesktop}>
-            <Button color="inherit" onClick={openLoginDialog}>{username ? 'Logout' : 'Login'}</Button>
+            {username ?
+              <Button color="inherit" onClick={onLogout}>Logout</Button> :
+              <Button color="inherit" onClick={openLoginDialog}>Login</Button>
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

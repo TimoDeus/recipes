@@ -6,6 +6,7 @@ import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/qu
 import { fetchRecipes } from '../../actions/recipes'
 import Header from '../../components/header/Header'
 import LoginDialog from '../../components/auth/LoginDialog'
+import { logout } from '../../actions/auth'
 
 class HeaderContainer extends React.Component {
 
@@ -42,6 +43,7 @@ class HeaderContainer extends React.Component {
         username={this.props.username}
         query={this.state.query || ''}
         openLoginDialog={this.openLoginDialog}
+        onLogout={this.props.logout}
       />
       <LoginDialog
         open={this.state.loginDialogOpen}
@@ -52,7 +54,8 @@ class HeaderContainer extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch, { location }) => ({
-  updateFilter: () => dispatch(fetchRecipes(getQueryParamsFromLocation(location)))
+  updateFilter: () => dispatch(fetchRecipes(getQueryParamsFromLocation(location))),
+  logout: () => dispatch(logout())
 })
 
 const mapStateToProps = ({ recipes, auth: { username } }) => ({
@@ -62,6 +65,7 @@ const mapStateToProps = ({ recipes, auth: { username } }) => ({
 
 HeaderContainer.propTypes = {
   updateFilter: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   username: PropTypes.string
 }
 
