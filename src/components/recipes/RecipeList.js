@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import RecipeCard from './RecipeCard'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../../actions/recipes'
 import * as PropTypes from 'prop-types'
@@ -10,6 +9,7 @@ import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/qu
 import SelectedTags from '../header/SelectedTags'
 import Grid from '@material-ui/core/Grid'
 import { Container } from '@material-ui/core'
+import RecipeCardContainer from './RecipeCardContainer'
 
 class RecipeList extends Component {
 
@@ -45,7 +45,7 @@ class RecipeList extends Component {
         <Container>
           <Grid container spacing={3}>
             {toDisplay.map(recipe =>
-              <RecipeCard key={recipe.title} recipe={recipe}/>
+              <RecipeCardContainer key={recipe.title} recipe={recipe}/>
             )}
           </Grid>
         </Container>

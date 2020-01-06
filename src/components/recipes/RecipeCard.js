@@ -1,93 +1,91 @@
-import React, { Component } from 'react'
-import { Button, Card, Icon, Placeholder } from 'semantic-ui-react'
-import * as PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-import './RecipeCard.css'
-import { deleteRecipe, fetchRecipes } from '../../actions/recipes'
-import ConfirmationButton from './ConfirmationButton'
-import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
-import Grid from '@material-ui/core/Grid'
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Avatar from '@material-ui/core/Avatar'
+import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import { red } from '@material-ui/core/colors'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import ShareIcon from '@material-ui/icons/Share'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { Box } from '@material-ui/core'
+import Chip from '@material-ui/core/Chip'
 
-class RecipeCard extends Component {
+const useStyles = makeStyles(theme => ({
+  card: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}))
 
-  wrapSearchText (text) {
-    const { location } = this.props
-    const { query } = getQueryParamsFromLocation(location)
-    const value = query && query.length > 2 ? text.replace(new RegExp('(' + query.trim() + ')', 'gi'), '<em>$1</em>') : text
-    return <span dangerouslySetInnerHTML={{ __html: value }}/>
-  }
+const RecipeCard = props => {
+  const classes = useStyles()
+  const { recipe: { title, shortDescription, tags } } = props
 
-  tagClickHandler = value => () => {
-    const { history, location } = this.props
-    const queryParams = getQueryParamsFromLocation(location)
-    let { tags = [] } = queryParams
-    if (!Array.isArray(tags)) {
-      tags = [tags]
-    }
-    if (!tags.includes(value)) {
-      tags.push(value)
-    } else {
-      tags = tags.filter(t => t !== value)
-    }
-    queryParams.tags = tags
-    history.push(`${location.pathname}?${stringifyQueryParams(queryParams)}`)
-    this.props.onTagClicked(queryParams)
-  }
-
-  printTags = tags => {
+  const printTags = tags => {
     return tags.map(s => s.trim())
-      .map((value, idx) =>
-        <Button key={idx} size='mini' compact onClick={this.tagClickHandler(value)}>
-          {this.wrapSearchText(value)}
-        </Button>
-      )
+      .map((value, idx) => <Chip key={idx} label={value}/>)
   }
 
-  render () {
-    const { recipe, auth, onDelete } = this.props
-    const isAuthenticated = Boolean(auth.token)
-    return (
-      <Grid item xs={12} sm={6}>
-        <Card fluid color='blue'>
-          <Placeholder fluid>
-            <Placeholder.Image/>
-          </Placeholder>
-          <Card.Content>
-            <Card.Header>
-              {this.wrapSearchText(recipe.title)}
-            </Card.Header>
-            <Card.Meta>
-              {this.printTags(recipe.tags)}
-            </Card.Meta>
-            {this.wrapSearchText(recipe.shortDescription)}
-          </Card.Content>
-          {isAuthenticated &&
-          <Card.Content extra>
-            <Link to={`/editRecipe/${recipe._id}`}><Icon name="edit"/></Link>
-            <ConfirmationButton compact size='mini' floated='right' icon={{ name: 'trash alternate' }}
-                                content={`Rezept '${recipe.title}' löschen?`} onConfirm={() => onDelete(recipe._id)}/>
-          </Card.Content>
-          }
-        </Card>
-      </Grid>
-    )
-  }
+  return (
+    <Card className={classes.card}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            T
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon/>
+          </IconButton>
+        }
+        title={title}
+        subheader="September 14, 2016"
+      />
+      <CardMedia
+        className={classes.media}
+        image="/static/images/cards/paella.jpg"
+        title="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {shortDescription}
+        </Typography>
+        <Box>
+          {printTags(tags)}
+        </Box>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon/>
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon/>
+        </IconButton>
+      </CardActions>
+    </Card>
+  )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  onTagClicked: params => dispatch(fetchRecipes(params)),
-  onDelete: recipeId => dispatch(deleteRecipe(recipeId)),
-})
-
-const mapStateToProps = ({ auth }) => ({
-  auth
-})
-
-RecipeCard.propTypes = {
-  recipe: PropTypes.object.isRequired,
-  onTagClicked: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeCard))
+export default RecipeCard
