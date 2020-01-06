@@ -1,18 +1,18 @@
 import React from 'react'
-import { Container, Label, Menu } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
-import { messages } from '../../utils/messages'
-import { Link, withRouter } from 'react-router-dom'
-import LoginDialog from '../auth/LoginDialog'
-import Logout from '../auth/Logout'
+import { withRouter } from 'react-router-dom'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import AppBar from '@material-ui/core/AppBar'
+import { messages } from '../../utils/messages'
 
 const types = [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]
 
 class SubHeader extends React.Component {
 
-  handleTypeChange = type => () => {
+  handleTypeChange = (event, type) => {
     const { history, location } = this.props
     const queryParams = getQueryParamsFromLocation(location)
     queryParams.type = type
@@ -25,45 +25,34 @@ class SubHeader extends React.Component {
   }
 
   render () {
-    const { recipes, location } = this.props
+    const { recipes } = this.props
     const activeTab = this.getActiveTab()
-    const {query, tags = []} = getQueryParamsFromLocation(location)
-    const hasFilter = tags.length || query
-    const isAuthenticated = Boolean(this.props.auth.token)
 
     return (
-      <Container>
-        <Menu tabular>
+      <AppBar position="static" color="default">
+        <Tabs
+          value={activeTab}
+          onChange={this.handleTypeChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
           {Object.keys(recipes).length !== 0 && types.map(t => (
-            <Menu.Item active={activeTab === t} onClick={this.handleTypeChange(t)} key={t}>
-              {messages[t]} <Label circular color='blue'>{recipes[t].length}</Label>
-            </Menu.Item>)
-          )}
-          {hasFilter && (
-            <Menu.Menu position='right'>
-              <Menu.Item>
-                <Link to="/">Filter zurücksetzen</Link>
-              </Menu.Item>
-            </Menu.Menu>
-          )}
-          <Menu.Menu position='right'>
-            {isAuthenticated && <Menu.Item>
-              <Link to="/addRecipe">Hinzufügen</Link>
-            </Menu.Item>
-            }
-            <Menu.Item>
-              {!isAuthenticated ? <LoginDialog/> : <Logout/>}
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
-      </Container>
+            <Tab
+              value={t}
+              label={<span>{messages[t]} <b>({recipes[t].length})</b></span>}
+              key={t}
+              disabled={!recipes[t].length}
+            />
+          ))}
+        </Tabs>
+      </AppBar>
     )
   }
 }
 
-const mapStateToProps = ({ recipes, auth }) => ({
-  recipes,
-  auth
+const mapStateToProps = ({ recipes }) => ({
+  recipes
 })
 
 export default withRouter(connect(mapStateToProps, null)(SubHeader))

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeCard'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../../actions/recipes'
@@ -24,14 +24,14 @@ class RecipeList extends Component {
     const { recipes } = this.props
     const toDisplay = recipes[this.getActiveTab()] || []
     return (
-      <Container>
+      <div>
         <SubHeader/>
         <Grid stackable columns={2}>
           {toDisplay.map(recipe =>
             <RecipeCard key={recipe.title} recipe={recipe}/>
           )}
         </Grid>
-      </Container>
+      </div>
     )
   }
 }
