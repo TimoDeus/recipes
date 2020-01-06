@@ -35,6 +35,7 @@ class HeaderContainer extends React.Component {
 
   openLoginDialog = () => this.setState({ loginDialogOpen: true })
   closeLoginDialog = () => this.setState({ loginDialogOpen: false })
+  redirectToRecipeForm = () => this.props.history.push('/addRecipe')
 
   render () {
     return <div>
@@ -44,6 +45,7 @@ class HeaderContainer extends React.Component {
         query={this.state.query || ''}
         openLoginDialog={this.openLoginDialog}
         onLogout={this.props.logout}
+        redirectToRecipeForm={this.redirectToRecipeForm}
       />
       <LoginDialog
         open={this.state.loginDialogOpen}

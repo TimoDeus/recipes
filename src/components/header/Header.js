@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = props => {
-  const { handleSearch, username, query, openLoginDialog, onLogout } = props
+  const { handleSearch, username, query, openLoginDialog, onLogout, redirectToRecipeForm } = props
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -138,9 +138,10 @@ const Header = props => {
             />
           </div>
           <div className={classes.sectionDesktop}>
+            {username && <Button color="inherit" variant="outlined" className={classes.menuButton} onClick={redirectToRecipeForm}>Neues Rezept</Button>}
             {username ?
-              <Button color="inherit" onClick={onLogout}>Logout</Button> :
-              <Button color="inherit" onClick={openLoginDialog}>Login</Button>
+              <Button color="secondary" variant="outlined" className={classes.menuButton} onClick={onLogout}>Logout</Button> :
+              <Button color="inherit" variant="outlined" className={classes.menuButton} onClick={openLoginDialog}>Login</Button>
             }
           </div>
           <div className={classes.sectionMobile}>
