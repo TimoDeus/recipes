@@ -94,7 +94,7 @@ const Header = props => {
 
   const mobileMenuId = 'menu-mobile'
   const renderMobileMenu = props => {
-    const { username } = props
+    const { username, redirectToRecipeForm } = props
     return (<Menu
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -104,6 +104,7 @@ const Header = props => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
       >
+        {username && <MenuItem onClick={redirectToRecipeForm}>Neues Rezept</MenuItem>}
         {username ?
           <MenuItem onClick={onLogout}>Logout</MenuItem> :
           <MenuItem onClick={openLoginDialog}>Login</MenuItem>
