@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = props => {
-  const { handleSearch, username } = props
+  const { handleSearch, username, query, openLoginDialog } = props
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -105,7 +105,7 @@ const Header = props => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
       >
-        <MenuItem>{userAction}</MenuItem>
+        <MenuItem onClick={openLoginDialog}>{userAction}</MenuItem>
       </Menu>
     )
   }
@@ -132,10 +132,11 @@ const Header = props => {
               }}
               inputProps={{ 'aria-label': 'search' }}
               onChange={handleSearch}
+              value={query}
             />
           </div>
           <div className={classes.sectionDesktop}>
-            <Button color="inherit">{username ? 'Logout' : 'Login'}</Button>
+            <Button color="inherit" onClick={openLoginDialog}>{username ? 'Logout' : 'Login'}</Button>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
 import { messages } from '../../utils/messages'
 import { Link, withRouter } from 'react-router-dom'
-import Login from '../auth/Login'
+import LoginDialog from '../auth/LoginDialog'
 import Logout from '../auth/Logout'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 
@@ -52,7 +52,7 @@ class SubHeader extends React.Component {
             </Menu.Item>
             }
             <Menu.Item>
-              {!isAuthenticated ? <Login/> : <Logout/>}
+              {!isAuthenticated ? <LoginDialog/> : <Logout/>}
             </Menu.Item>
           </Menu.Menu>
         </Menu>

@@ -5,18 +5,20 @@ import { withRouter } from 'react-router-dom'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 import { fetchRecipes } from '../../actions/recipes'
 import Header from '../../components/header/Header'
+import LoginDialog from '../../components/auth/LoginDialog'
 
 class HeaderContainer extends React.Component {
 
   state = {
-    query: undefined
+    query: undefined,
+    loginDialogOpen: false
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     const { location } = this.props
     const { query } = getQueryParamsFromLocation(location)
-    if (prevState.query !== query) {
-      this.setState({ query })
+    if (prevState.query && !query) {
+      this.setState({ query: undefined })
       this.props.updateFilter(query)
     }
   }
@@ -30,11 +32,22 @@ class HeaderContainer extends React.Component {
     this.props.updateFilter(value)
   }
 
+  openLoginDialog = () => this.setState({ loginDialogOpen: true })
+  closeLoginDialog = () => this.setState({ loginDialogOpen: false })
+
   render () {
-    return <Header
-      handleSearch={this.handleSearch}
-      username={this.props.username}
-    />
+    return <div>
+      <Header
+        handleSearch={this.handleSearch}
+        username={this.props.username}
+        query={this.state.query || ''}
+        openLoginDialog={this.openLoginDialog}
+      />
+      <LoginDialog
+        open={this.state.loginDialogOpen}
+        onClose={this.closeLoginDialog}
+      />
+    </div>
   }
 }
 
