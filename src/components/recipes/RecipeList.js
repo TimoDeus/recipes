@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeCard'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../../actions/recipes'
@@ -9,6 +8,8 @@ import { withRouter } from 'react-router-dom'
 import { TYPE_MAIN } from '../../utils/constants'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 import SelectedTags from '../header/SelectedTags'
+import Grid from '@material-ui/core/Grid'
+import { Container } from '@material-ui/core'
 
 class RecipeList extends Component {
 
@@ -41,11 +42,13 @@ class RecipeList extends Component {
       <div>
         <SubHeader/>
         <SelectedTags tags={tags} onDeleteTag={this.onDeleteTag}/>
-        <Grid stackable columns={2}>
-          {toDisplay.map(recipe =>
-            <RecipeCard key={recipe.title} recipe={recipe}/>
-          )}
-        </Grid>
+        <Container>
+          <Grid container spacing={3}>
+            {toDisplay.map(recipe =>
+              <RecipeCard key={recipe.title} recipe={recipe}/>
+            )}
+          </Grid>
+        </Container>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Grid, Icon, Placeholder } from 'semantic-ui-react'
+import { Button, Card, Icon, Placeholder } from 'semantic-ui-react'
 import * as PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -7,6 +7,7 @@ import './RecipeCard.css'
 import { deleteRecipe, fetchRecipes } from '../../actions/recipes'
 import ConfirmationButton from './ConfirmationButton'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
+import Grid from '@material-ui/core/Grid'
 
 class RecipeCard extends Component {
 
@@ -47,7 +48,7 @@ class RecipeCard extends Component {
     const { recipe, auth, onDelete } = this.props
     const isAuthenticated = Boolean(auth.token)
     return (
-      <Grid.Column>
+      <Grid item xs={12} sm={6}>
         <Card fluid color='blue'>
           <Placeholder fluid>
             <Placeholder.Image/>
@@ -69,7 +70,7 @@ class RecipeCard extends Component {
           </Card.Content>
           }
         </Card>
-      </Grid.Column>
+      </Grid>
     )
   }
 }

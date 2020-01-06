@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import Paper from '@material-ui/core/Paper'
+import { Box } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,9 +22,9 @@ const SelectedTags = props => {
   if (!Array.isArray(tags)) {
     tags = [tags]
   }
-  return Boolean(tags.length) && (
-    <Paper className={classes.root}>
-      {tags.map(tag => (
+  return (
+    <Box className={classes.root}>
+      {Boolean(tags.length) && tags.map(tag => (
         <Chip
           key={tag}
           label={tag}
@@ -32,7 +32,7 @@ const SelectedTags = props => {
           className={classes.chip}
         />
       ))}
-    </Paper>
+    </Box>
   )
 }
 
