@@ -66,7 +66,6 @@ const mapStateToProps = ({ recipes }) => ({
 RecipeList.propTypes = {
   recipes: PropTypes.object.isRequired,
   fetchRecipes: PropTypes.func.isRequired,
-  onDeleteTag: PropTypes.func.isRequired,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RecipeList))
