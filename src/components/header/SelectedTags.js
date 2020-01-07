@@ -9,6 +9,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
     padding: theme.spacing(0.5),
+    minHeight: 48,
   },
   chip: {
     margin: theme.spacing(0.5),

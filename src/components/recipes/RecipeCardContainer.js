@@ -38,8 +38,8 @@ class RecipeCardContainer extends Component {
     const { recipe, auth, onDelete } = this.props
     const isAuthenticated = Boolean(auth.token)
     return (
-      <Grid item xs={12} sm={6}>
-        <RecipeCard recipe={recipe}/>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
+        <RecipeCard recipe={recipe} isAuthenticated={isAuthenticated} onTagClicked={this.tagClickHandler} onDelete={onDelete}/>
       </Grid>
     )
   }
