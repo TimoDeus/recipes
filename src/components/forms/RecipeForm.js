@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import { compose } from 'redux'
 import * as PropTypes from 'prop-types'
-import TextField from './elements/TextField'
 import TagSelector from './elements/TagSelector'
 import { addTag, getTags } from '../../actions/tags'
-import RichTextEditor from './elements/RichTextEditor'
-import Select from './elements/Select'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
 import { messages } from '../../utils/messages'
+import { Container } from '@material-ui/core'
+import TextField from './elements/TextField'
+import Select from './elements/Select'
+import Button from '@material-ui/core/Button'
+import RichTextEditor from './elements/RichTextEditor'
 
 class RecipeForm extends Component {
 
@@ -21,14 +23,16 @@ class RecipeForm extends Component {
   render () {
     const { handleSubmit, submitting, tags, addTag } = this.props
     return (
-      <Form onSubmit={handleSubmit}>
-        <TextField name="title" label="Titel"/>
-        <TextField name="shortDescription" label="Kurzbeschreibung"/>
-        <Select name="type" label="Kategorie" options={getValidCategories()}/>
-        <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
-        <Field name="description" label="Beschreibung" component={RichTextEditor}/>
-        <Button type="submit" disabled={submitting} loading={submitting}>Speichern</Button>
-      </Form>
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <TextField name="title" label="Titel"/>
+          <TextField name="shortDescription" label="Kurzbeschreibung"/>
+          <Select name="type" label="Kategorie" options={getValidCategories()}/>
+          <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
+          <Field name="description" label="Beschreibung" component={RichTextEditor}/>
+          <Button type="submit" disabled={submitting}>Speichern</Button>
+        </Form>
+      </Container>
     )
   }
 }
@@ -41,7 +45,7 @@ const getValidCategories = () =>
 
 const validate = values => {
   const errors = {}
-  const fields = ['title', 'shortDescription', 'tags', 'description', 'type']
+  const fields = ['title', 'shortDescription', 'description', 'type']
 
   fields.forEach(it =>
     errors[it] = values[it] ? undefined : 'Pflichtfeld'
@@ -55,19 +59,18 @@ const mapDispatchToProps = dispatch => ({
   addTag: tag => dispatch(addTag(tag)),
 })
 
-const mapStateToProps = ({ recipe, tags }, { formId }) => {
-  return ({
-    initialValues: recipe,
-    form: formId,
-    tags
-  })
-}
+const mapStateToProps = ({ recipe, tags }, { formId }) => ({
+  initialValues: recipe,
+  form: formId,
+  tags
+})
 
 RecipeForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   getTags: PropTypes.func.isRequired,
   addTag: PropTypes.func.isRequired,
   formId: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
   recipe: PropTypes.object,
 }
 
