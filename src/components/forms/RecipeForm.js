@@ -8,9 +8,8 @@ import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import { compose } from 'redux'
 import connect from 'react-redux/lib/connect/connect'
-import { withStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/core'
 import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
-import { messages } from '../../utils/messages'
 import * as PropTypes from 'prop-types'
 import { addTag, getTags } from '../../actions/tags'
 import RichTextEditor from './elements/RichTextEditor'
@@ -41,9 +40,9 @@ class RecipeForm extends Component {
           {headline}
         </Typography>
         <form onSubmit={handleSubmit}>
+          <Select name="type" label="Kategorie" options={[TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]}/>
           <TextField name="title" label="Titel"/>
           <TextField name="shortDescription" label="Kurzbeschreibung"/>
-          <Select name="type" label="Kategorie" options={getValidCategories()}/>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
           <Field name="description" label="Beschreibung" component={RichTextEditor}/>
           <div className={classes.actions}>
@@ -54,12 +53,6 @@ class RecipeForm extends Component {
     )
   }
 }
-
-const getValidCategories = () =>
-  [TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES].reduce((res, cur) => {
-    res.push({ key: cur, value: cur, text: messages[cur] })
-    return res
-  }, [])
 
 const validate = values => {
   const errors = {}
