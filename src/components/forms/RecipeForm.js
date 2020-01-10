@@ -49,7 +49,7 @@ class RecipeForm extends Component {
         <form onSubmit={handleSubmit}>
           <Select name="type" label="Kategorie" options={[TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]}/>
           <TextField name="title" label="Titel"/>
-          <TextField name="shortDescription" label="Kurzbeschreibung"/>
+          <TextField name="shortDescription" label="Kurzbeschreibung" multiline={true}/>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
           <Field name="description" label="Beschreibung" component={RichTextEditor}/>
           <div className={classes.actions}>
