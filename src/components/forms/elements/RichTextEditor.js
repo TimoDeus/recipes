@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactRTE from 'react-rte'
+import './RichTextEditor.css'
 
 const contentType = 'html'
 
@@ -30,7 +31,7 @@ class RichTextEditor extends Component {
 
   render () {
     return (
-      <ReactRTE value={this.state.value} onChange={this.onChange}/>
+      <ReactRTE value={this.state.value} onChange={this.onChange} editorClassName="editor"/>
     )
   }
 }
