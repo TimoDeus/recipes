@@ -8,7 +8,6 @@ import { TYPE_MAIN } from '../../utils/constants'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 import SelectedTags from '../header/SelectedTags'
 import Grid from '@material-ui/core/Grid'
-import { Container } from '@material-ui/core'
 import RecipeCardContainer from './RecipeCardContainer'
 
 class RecipeList extends Component {
@@ -42,13 +41,13 @@ class RecipeList extends Component {
       <div>
         <SubHeader/>
         <SelectedTags tags={tags} onDeleteTag={this.onDeleteTag}/>
-        <Container>
+        <div>
           <Grid container spacing={3}>
             {toDisplay.map(recipe =>
               <RecipeCardContainer key={recipe.title} recipe={recipe}/>
             )}
           </Grid>
-        </Container>
+        </div>
       </div>
     )
   }

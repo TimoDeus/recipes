@@ -6,11 +6,12 @@ import NotFoundPage from './NotFoundPage'
 import CreateRecipeForm from './forms/CreateRecipeForm'
 import EditRecipeForm from './forms/EditRecipeForm'
 import HeaderContainer from '../container/header/HeaderContainer'
+import Container from '@material-ui/core/Container'
 
 class App extends Component {
   render () {
     return (
-      <div>
+      <Container>
         <HeaderContainer/>
         <Switch>
           <Route exact path="/" component={RecipeList}/>
@@ -18,7 +19,7 @@ class App extends Component {
           <Route path="/editRecipe/:recipeId" component={EditRecipeForm}/>
           <Route component={NotFoundPage}/>
         </Switch>
-      </div>
+      </Container>
     )
   }
 }
