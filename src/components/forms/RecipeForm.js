@@ -13,6 +13,7 @@ import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
 import * as PropTypes from 'prop-types'
 import { addTag, getTags } from '../../actions/tags'
 import RichTextEditor from './elements/RichTextEditor'
+import { Redirect } from 'react-router-dom'
 
 const styles = {
   root: {
@@ -35,7 +36,10 @@ class RecipeForm extends Component {
   }
 
   render () {
-    const { handleSubmit, submitting, tags, addTag, headline, classes } = this.props
+    const { handleSubmit, submitting, tags, addTag, headline, classes, submitSucceeded } = this.props
+    if (submitSucceeded) {
+      return <Redirect to="/"/>
+    }
     return (
       <div>
         <Box className={classes.root}/>
