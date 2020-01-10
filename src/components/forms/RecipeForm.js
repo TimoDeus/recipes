@@ -19,6 +19,11 @@ const styles = {
   root: {
     minHeight: 48
   },
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginTop: 40
+  }
 }
 
 class RecipeForm extends Component {
@@ -41,7 +46,9 @@ class RecipeForm extends Component {
           <Select name="type" label="Kategorie" options={getValidCategories()}/>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
           <Field name="description" label="Beschreibung" component={RichTextEditor}/>
-          <Button type="submit" disabled={submitting}>Speichern</Button>
+          <div className={classes.actions}>
+            <Button type="submit" color={'primary'} variant={'contained'} disabled={submitting}>Speichern</Button>
+          </div>
         </form>
       </div>
     )
