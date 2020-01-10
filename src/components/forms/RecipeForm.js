@@ -22,6 +22,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-end',
     marginTop: 40
+  },
+  headline: {
+    marginBottom: 15
   }
 }
 
@@ -36,7 +39,7 @@ class RecipeForm extends Component {
     return (
       <div>
         <Box className={classes.root}/>
-        <Typography variant={'h5'}>
+        <Typography variant={'h5'} className={classes.headline}>
           {headline}
         </Typography>
         <form onSubmit={handleSubmit}>
