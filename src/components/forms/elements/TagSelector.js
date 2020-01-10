@@ -7,14 +7,17 @@ import TextField from '@material-ui/core/TextField'
 
 class TagSelector extends Component {
 
-  handleChange = inputOnChange => (e, values) => inputOnChange(values)
+  handleChange = inputOnChange => (e, values) => {
+    console.log(values)
+    inputOnChange(values)
+  }
 
   renderDropdown = fieldProps => {
     const { label, tags, input } = fieldProps
     return <Autocomplete
       multiple
       options={tags}
-      defaultValue={input.value}
+      value={input.value}
       freeSolo
       renderTags={(value, getTagProps) =>
         value.map((option, index) => <Chip variant="outlined" label={option} {...getTagProps({ index })} />)
