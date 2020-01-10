@@ -12,7 +12,7 @@ class CreateRecipeForm extends Component {
 
   render () {
     const { onSubmit } = this.props
-    return <RecipeForm onSubmit={onSubmit} formId="create"/>
+    return <RecipeForm onSubmit={onSubmit} formId="create" headline="Neues Rezept"/>
   }
 }
 

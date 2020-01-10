@@ -13,7 +13,7 @@ class EditRecipeForm extends Component {
 
   render () {
     const { onSubmit } = this.props
-    return <RecipeForm onSubmit={onSubmit} formId="edit"/>
+    return <RecipeForm onSubmit={onSubmit} formId="edit" headline="Rezept bearbeiten"/>
   }
 }
 

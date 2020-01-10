@@ -1,18 +1,25 @@
 import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
-import { compose } from 'redux'
-import * as PropTypes from 'prop-types'
-import TagSelector from './elements/TagSelector'
-import { addTag, getTags } from '../../actions/tags'
-import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
-import { messages } from '../../utils/messages'
-import { Container } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 import TextField from './elements/TextField'
 import Select from './elements/Select'
+import TagSelector from './elements/TagSelector'
+import { Field, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
+import { compose } from 'redux'
+import connect from 'react-redux/lib/connect/connect'
+import { withStyles } from '@material-ui/styles'
+import { TYPE_DESSERT, TYPE_MAIN, TYPE_PASTRIES } from '../../utils/constants'
+import { messages } from '../../utils/messages'
+import * as PropTypes from 'prop-types'
+import { addTag, getTags } from '../../actions/tags'
 import RichTextEditor from './elements/RichTextEditor'
+
+const styles = {
+  root: {
+    minHeight: 48
+  },
+}
 
 class RecipeForm extends Component {
 
@@ -21,18 +28,22 @@ class RecipeForm extends Component {
   }
 
   render () {
-    const { handleSubmit, submitting, tags, addTag } = this.props
+    const { handleSubmit, submitting, tags, addTag, headline, classes } = this.props
     return (
-      <Container>
-        <Form onSubmit={handleSubmit}>
+      <div>
+        <Box className={classes.root}/>
+        <Typography variant={'h5'}>
+          {headline}
+        </Typography>
+        <form onSubmit={handleSubmit}>
           <TextField name="title" label="Titel"/>
           <TextField name="shortDescription" label="Kurzbeschreibung"/>
           <Select name="type" label="Kategorie" options={getValidCategories()}/>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
           <Field name="description" label="Beschreibung" component={RichTextEditor}/>
           <Button type="submit" disabled={submitting}>Speichern</Button>
-        </Form>
-      </Container>
+        </form>
+      </div>
     )
   }
 }
@@ -76,5 +87,6 @@ RecipeForm.propTypes = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  reduxForm({ validate, enableReinitialize: true })
+  reduxForm({ validate, enableReinitialize: true }),
+  withStyles(styles)
 )(RecipeForm)
