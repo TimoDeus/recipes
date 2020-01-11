@@ -7,10 +7,7 @@ import TextField from '@material-ui/core/TextField'
 
 class TagSelector extends Component {
 
-  handleChange = inputOnChange => (e, values) => {
-    console.log(values)
-    inputOnChange(values)
-  }
+  handleChange = inputOnChange => (e, values) => inputOnChange(values)
 
   renderDropdown = fieldProps => {
     const { label, tags, input } = fieldProps
