@@ -14,6 +14,8 @@ import * as PropTypes from 'prop-types'
 import { addTag, getTags } from '../../actions/tags'
 import RichTextEditor from './elements/RichTextEditor'
 import { Redirect } from 'react-router-dom'
+import ImageUploader from './elements/ImageUploader'
+import Grid from '@material-ui/core/Grid'
 
 const styles = {
   root: {
@@ -26,6 +28,9 @@ const styles = {
   },
   headline: {
     marginBottom: 15
+  },
+  imageUploaderGrid: {
+
   }
 }
 
@@ -47,9 +52,17 @@ class RecipeForm extends Component {
           {headline}
         </Typography>
         <form onSubmit={handleSubmit}>
-          <Select name="type" label="Kategorie" options={[TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]}/>
-          <TextField name="title" label="Titel"/>
-          <TextField name="shortDescription" label="Kurzbeschreibung" multiline={true}/>
+          <Grid container>
+            <Grid item xs={12} sm={6}>
+              <Select name="type" label="Kategorie" options={[TYPE_MAIN, TYPE_DESSERT, TYPE_PASTRIES]}/>
+              <TextField name="title" label="Titel"/>
+              <TextField name="shortDescription" label="Kurzbeschreibung" multiline={true}/>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+
+              <ImageUploader/>
+            </Grid>
+          </Grid>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>
           <Field name="description" label="Beschreibung" component={RichTextEditor}/>
           <div className={classes.actions}>
