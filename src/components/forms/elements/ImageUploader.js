@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { DEFAULT_IMAGE } from '../../../utils/constants'
 import { Field } from 'redux-form'
 import { CircularProgress } from '@material-ui/core'
+import { resizeImage } from '../../../utils/imageUtils'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,23 +87,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const toBase64 = file =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = error => reject(error)
-  })
-
-const changeHandler = (inputOnChange, setLoading) => e => {
-  const file = e.target.files[0]
+const changeHandler = (inputOnChange, setLoading) => ({ target: { files } }) => {
+  const file = files[0]
   if (file) {
     setLoading(true)
-    toBase64(file).then(
-      data => inputOnChange(data)
-    ).finally(
-      () => setLoading(false)
-    )
+    resizeImage(file).then(inputOnChange).finally(() => setLoading(false))
   }
 }
 
