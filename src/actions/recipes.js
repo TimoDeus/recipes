@@ -1,5 +1,6 @@
 import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RESET_RECIPE } from './actionTypes'
 import axios from 'axios'
+import { normalizeTitle } from '../utils/recipeUtils'
 
 export const fetchRecipes = params => dispatch => {
 
@@ -11,6 +12,7 @@ export const fetchRecipes = params => dispatch => {
 }
 
 const doAddRecipe = data => (dispatch, getState) => {
+  data.normalizedTitle = normalizeTitle(data.title)
   return axios.post(process.env.REACT_APP_API_BASE_URL + 'recipes/addRecipe', data, createRequestConfig(getState())).then(
     res => dispatch({
       type: ADD_RECIPE,
@@ -19,6 +21,7 @@ const doAddRecipe = data => (dispatch, getState) => {
 }
 
 const doEditRecipe = data => (dispatch, getState) => {
+  data.normalizedTitle = normalizeTitle(data.title)
   return axios.patch(process.env.REACT_APP_API_BASE_URL + 'recipes/editRecipe', data, createRequestConfig(getState())).then(
     () => dispatch({
       type: EDIT_RECIPE,
