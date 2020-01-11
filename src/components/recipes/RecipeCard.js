@@ -58,7 +58,7 @@ const RecipeCard = props => {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={`data:image/jpeg;base64,${image || DEFAULT_IMAGE}`}
+          image={image || DEFAULT_IMAGE}
           title={title}
         />
         <CardContent>

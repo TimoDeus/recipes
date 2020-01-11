@@ -59,8 +59,7 @@ class RecipeForm extends Component {
               <TextField name="shortDescription" label="Kurzbeschreibung" multiline={true}/>
             </Grid>
             <Grid item xs={12} sm={6}>
-
-              <ImageUploader/>
+              <ImageUploader name="image"/>
             </Grid>
           </Grid>
           <TagSelector name="tags" label="Tags" tags={tags} onAddTag={addTag}/>

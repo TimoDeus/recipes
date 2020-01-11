@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import ButtonBase from '@material-ui/core/ButtonBase'
 import Typography from '@material-ui/core/Typography'
 import { DEFAULT_IMAGE } from '../../../utils/constants'
+import { Field } from 'redux-form'
+import { CircularProgress } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,6 +53,7 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     backgroundSize: 'cover',
     backgroundPosition: 'center 40%',
+    maxWidth: 300
   },
   imageBackdrop: {
     position: 'absolute',
@@ -78,13 +81,40 @@ const useStyles = makeStyles(theme => ({
   input: {
     display: 'none',
   },
+  loader: {
+    position: 'absolute'
+  }
 }))
 
-const ImageUploader = () => {
-  const classes = useStyles()
-  const imageSrc = `data:image/jpeg;base64,${DEFAULT_IMAGE}`
-  const title = 'Bild auswählen'
+const toBase64 = file =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = error => reject(error)
+  })
 
+const changeHandler = (inputOnChange, setLoading) => e => {
+  const file = e.target.files[0]
+  if (file) {
+    setLoading(true)
+    toBase64(file).then(
+      data => inputOnChange(data)
+    ).finally(
+      () => setLoading(false)
+    )
+  }
+}
+
+const ImageUploader = ({ name }) => {
+  const classes = useStyles()
+  const [loading, setLoading] = React.useState(false)
+  return <Field name={name} classes={classes} component={renderButton} isLoading={loading} setLoading={setLoading}/>
+}
+
+const renderButton = ({ classes, input: { onChange, value }, isLoading, setLoading }) => {
+  const imageSrc = value || DEFAULT_IMAGE
+  const title = 'Bild auswählen'
   return (
     <div className={classes.root}>
       <input
@@ -93,6 +123,8 @@ const ImageUploader = () => {
         id="contained-button-file"
         multiple
         type="file"
+        onChange={changeHandler(onChange, setLoading)}
+        disabled={isLoading}
       />
       <label htmlFor="contained-button-file">
         <ButtonBase
@@ -101,20 +133,23 @@ const ImageUploader = () => {
           key={title}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
+          disabled={isLoading}
         >
           <img alt={title} className={classes.imageSrc} src={imageSrc}/>
           <span className={classes.imageBackdrop}/>
-          <span className={classes.imageButton}>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              className={classes.imageTitle}
-            >
-              {title}
-              <span className={classes.imageMarked}/>
-            </Typography>
-          </span>
+          {isLoading ? <CircularProgress className={classes.loader}/> :
+            <span className={classes.imageButton}>
+              <Typography
+                component="span"
+                variant="subtitle1"
+                color="inherit"
+                className={classes.imageTitle}
+              >
+                {title}
+                <span className={classes.imageMarked}/>
+              </Typography>
+            </span>
+          }
         </ButtonBase>
       </label>
     </div>
