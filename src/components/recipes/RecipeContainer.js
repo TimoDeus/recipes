@@ -12,10 +12,10 @@ class RecipeContainer extends React.Component {
   componentDidMount () {
     this.props.getRecipe()
   }
-
-  componentWillUnmount () {
-    this.props.resetRecipe()
-  }
+  //
+  // componentWillUnmount () {
+  //   this.props.resetRecipe()
+  // }
 
   render () {
     const { recipe, isAuthenticated, onDelete, onTagClicked, fetchError } = this.props

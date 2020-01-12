@@ -2,7 +2,7 @@ import { FETCH_ERROR, FETCH_RECIPE, FETCH_RECIPE_BY_TITLE, RESET_RECIPE } from '
 
 const initialState = {
   fetchError: false,
-  recipe: undefined
+  recipe: {}
 }
 
 const recipe = (state = initialState, action) => {
