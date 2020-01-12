@@ -1,11 +1,11 @@
-import React from 'react';
-import {Container, Header} from 'semantic-ui-react';
+import React from 'react'
+import Container from '@material-ui/core/Container'
+import Typography from '@material-ui/core/Typography'
 
 const NotFound = () => (
   <Container>
-    <Header as='h1'>404</Header>
-    <div>Seite nicht gefunden</div>
+    <Typography variant="h3">Seite nicht gefunden</Typography>
   </Container>
-);
+)
 
-export default NotFound;
+export default NotFound

@@ -10,7 +10,6 @@ import { Provider } from 'react-redux'
 import { logger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import { Router } from 'react-router-dom'
-import 'semantic-ui-css/semantic.min.css'
 import {createCookieMiddleware, initialState} from './utils/cookieMiddleware';
 import { createBrowserHistory } from "history";
 
