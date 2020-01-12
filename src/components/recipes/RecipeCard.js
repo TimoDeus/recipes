@@ -11,12 +11,9 @@ import { Delete, Edit } from '@material-ui/icons'
 import { Box } from '@material-ui/core'
 import Chip from '@material-ui/core/Chip'
 import CardActionArea from '@material-ui/core/CardActionArea'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
 import { Link } from 'react-router-dom'
 import { DEFAULT_IMAGE } from '../../utils/constants'
+import ConfirmationDialog from '../forms/ConfirmationDialog'
 
 const useStyles = makeStyles(() => ({
   media: {
@@ -34,16 +31,6 @@ const useStyles = makeStyles(() => ({
 const RecipeCard = props => {
   const classes = useStyles()
   const { recipe: { title, shortDescription, tags, image, _id }, isAuthenticated, onTagClicked, onDelete } = props
-
-  const [open, setOpen] = React.useState(false)
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const printTags = () => {
     return tags
@@ -78,20 +65,16 @@ const RecipeCard = props => {
           <Link to={`/editRecipe/${_id}`}>
             <IconButton size="small"><Edit/></IconButton>
           </Link>
-          <IconButton size="small" onClick={handleClickOpen}><Delete/></IconButton>
+          <ConfirmationDialog
+            title={`Rezept '${title}' wirklich löschen?`}
+            cancelText="Abbrechen"
+            confirmText="Löschen"
+            onConfirm={() => onDelete(_id)}
+          >
+            <IconButton size="small"><Delete/></IconButton>
+          </ConfirmationDialog>
         </Box>}
       </CardActions>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="alert-dialog-title">{`Rezept '${title}' wirklich löschen?`}</DialogTitle>
-        <DialogActions>
-          <Button onClick={handleClose} size="small">
-            Abbrechen
-          </Button>
-          <Button onClick={() => onDelete(_id)} color="primary" variant="contained">
-            Löschen
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Card>
 
   )
