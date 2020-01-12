@@ -2,14 +2,12 @@ import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RE
 import axios from 'axios'
 import { normalizeTitle } from '../utils/recipeUtils'
 
-export const fetchRecipes = params => dispatch => {
-
-  return axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes', { params }).then(
+export const fetchRecipes = params => dispatch =>
+  axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes', { params }).then(
     ({ data }) => dispatch({
       type: FETCH_RECIPES,
       data
     }))
-}
 
 const doAddRecipe = data => (dispatch, getState) => {
   data.normalizedTitle = normalizeTitle(data.title)
@@ -57,8 +55,17 @@ export const editRecipe = data => dispatch => dispatch(doEditRecipe(data))
 
 const loadRecipe = recipeId => axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipeById', { params: { recipeId } })
 
+const loadRecipeByTitle = title => axios.get(process.env.REACT_APP_API_BASE_URL + 'recipes/getRecipeByTitle', { params: { title } })
+
 export const fetchRecipe = recipeId => dispatch =>
   loadRecipe(recipeId).then(
+    ({ data }) => dispatch({
+      type: FETCH_RECIPE,
+      data
+    }))
+
+export const fetchRecipeByTitle = title => dispatch =>
+  loadRecipeByTitle(title).then(
     ({ data }) => dispatch({
       type: FETCH_RECIPE,
       data
