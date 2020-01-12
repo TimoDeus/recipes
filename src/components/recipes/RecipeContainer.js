@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { fetchRecipeByTitle, fetchRecipes, resetRecipe } from '../../actions/recipes'
+import { fetchRecipeByTitle, resetRecipe } from '../../actions/recipes'
 import Recipe from './Recipe'
 import { isNonEmptyObject } from '../../utils/utils'
 import NotFound from '../NotFoundPage'
@@ -14,11 +14,11 @@ class RecipeContainer extends React.Component {
   }
 
   render () {
-    const { recipe, isAuthenticated, onTagClicked, fetchError } = this.props
+    const { recipe, isAuthenticated, fetchError } = this.props
     if (fetchError) {
       return <NotFound/>
     } else if (isNonEmptyObject(recipe)) {
-      return <Recipe recipe={recipe} isAuthenticated={isAuthenticated} onTagClicked={onTagClicked}/>
+      return <Recipe recipe={recipe} isAuthenticated={isAuthenticated}/>
     } else {
       return null
     }
@@ -27,8 +27,7 @@ class RecipeContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch, { match }) => ({
   getRecipe: () => dispatch(fetchRecipeByTitle(match.params.title)),
-  resetRecipe: () => dispatch(resetRecipe()),
-  onTagClicked: params => dispatch(fetchRecipes(params)),
+  resetRecipe: () => dispatch(resetRecipe())
 })
 
 const mapStateToProps = ({ recipe: { fetchError, recipe }, auth: { username } }) => ({
@@ -40,7 +39,6 @@ const mapStateToProps = ({ recipe: { fetchError, recipe }, auth: { username } })
 RecipeContainer.propTypes = {
   getRecipe: PropTypes.func.isRequired,
   resetRecipe: PropTypes.func.isRequired,
-  onTagClicked: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired
 }
 

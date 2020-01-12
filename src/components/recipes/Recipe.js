@@ -25,14 +25,16 @@ const useStyles = makeStyles(theme => ({
 
 const Recipe = props => {
   const classes = useStyles()
-  const { recipe, isAuthenticated, onTagClicked } = props
+  const { recipe, isAuthenticated } = props
   const { title, tags, image, description, _id } = recipe
 
   const printTags = () => {
     return tags && tags
       .map(s => s.trim())
       .map((value, idx) =>
-        <Chip size="small" key={idx} label={value} onClick={onTagClicked(value)}/>
+        <Link to={`/?tags=${value}`}>
+          <Chip size="small" key={idx} label={value} clickable/>
+        </Link>
       )
   }
 
