@@ -89,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
   addTag: tag => dispatch(addTag(tag)),
 })
 
-const mapStateToProps = ({ recipe, tags }, { formId }) => {
+const mapStateToProps = ({ recipe: {recipe}, tags }, { formId }) => {
   const initialValues = {...recipe, ...{type: recipe.type || TYPE_MAIN}}
   return {
     form: formId,

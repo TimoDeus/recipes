@@ -10,11 +10,11 @@ import RecipeContainer from './recipes/RecipeContainer'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
- root: {
-   '& a': {
-     textDecoration: 'none'
-   }
- }
+  root: {
+    '& a': {
+      textDecoration: 'none'
+    }
+  }
 }))
 
 const App = () => {

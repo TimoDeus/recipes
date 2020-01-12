@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { deleteRecipe, fetchRecipes } from '../../actions/recipes'
-import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
+import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/utils'
 import Grid from '@material-ui/core/Grid'
 import RecipeCard from './RecipeCard'
 

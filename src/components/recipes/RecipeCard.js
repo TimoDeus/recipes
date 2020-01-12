@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import { red } from '@material-ui/core/colors'
 import { Edit } from '@material-ui/icons'
 import { Box } from '@material-ui/core'
 import Chip from '@material-ui/core/Chip'
@@ -20,9 +19,6 @@ const useStyles = makeStyles(() => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
   adminActionBox: {
     marginLeft: 'auto'

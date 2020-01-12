@@ -1,4 +1,12 @@
-import { ADD_RECIPE, DELETE_RECIPE, EDIT_RECIPE, FETCH_RECIPE, FETCH_RECIPES, RESET_RECIPE } from './actionTypes'
+import {
+  ADD_RECIPE,
+  DELETE_RECIPE,
+  EDIT_RECIPE,
+  FETCH_ERROR,
+  FETCH_RECIPE,
+  FETCH_RECIPES,
+  RESET_RECIPE
+} from './actionTypes'
 import axios from 'axios'
 import { normalizeTitle } from '../utils/recipeUtils'
 
@@ -62,11 +70,15 @@ export const fetchRecipe = recipeId => dispatch =>
     ({ data }) => dispatch({
       type: FETCH_RECIPE,
       data
-    }))
+    }),
+    () => dispatch({ type: FETCH_ERROR })
+  )
 
 export const fetchRecipeByTitle = title => dispatch =>
   loadRecipeByTitle(title).then(
     ({ data }) => dispatch({
       type: FETCH_RECIPE,
       data
-    }))
+    }),
+    () => dispatch({ type: FETCH_ERROR })
+  )
