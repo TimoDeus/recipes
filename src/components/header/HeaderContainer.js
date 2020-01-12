@@ -15,6 +15,12 @@ class HeaderContainer extends React.Component {
     loginDialogOpen: false
   }
 
+  componentDidMount () {
+    const { location } = this.props
+    const { query } = getQueryParamsFromLocation(location)
+    this.setState({ query })
+  }
+
   componentDidUpdate (prevProps, prevState, snapshot) {
     const { location } = this.props
     const { query } = getQueryParamsFromLocation(location)
