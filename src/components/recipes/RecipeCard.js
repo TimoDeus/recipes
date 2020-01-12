@@ -7,13 +7,13 @@ import CardActions from '@material-ui/core/CardActions'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { red } from '@material-ui/core/colors'
-import { Delete, Edit } from '@material-ui/icons'
+import { Edit } from '@material-ui/icons'
 import { Box } from '@material-ui/core'
 import Chip from '@material-ui/core/Chip'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import { Link } from 'react-router-dom'
 import { DEFAULT_IMAGE } from '../../utils/constants'
-import ConfirmationDialog from '../forms/ConfirmationDialog'
+import DeleteConfirmation from '../forms/DeleteConfirmation'
 
 const useStyles = makeStyles(() => ({
   media: {
@@ -30,7 +30,8 @@ const useStyles = makeStyles(() => ({
 
 const RecipeCard = props => {
   const classes = useStyles()
-  const { recipe: { title, shortDescription, tags, image, _id }, isAuthenticated, onTagClicked, onDelete } = props
+  const { recipe, isAuthenticated, onTagClicked, onDelete } = props
+  const { title, shortDescription, tags, image, _id } = recipe
 
   const printTags = () => {
     return tags
@@ -65,14 +66,7 @@ const RecipeCard = props => {
           <Link to={`/editRecipe/${_id}`}>
             <IconButton size="small"><Edit/></IconButton>
           </Link>
-          <ConfirmationDialog
-            title={`Rezept '${title}' wirklich löschen?`}
-            cancelText="Abbrechen"
-            confirmText="Löschen"
-            onConfirm={() => onDelete(_id)}
-          >
-            <IconButton size="small"><Delete/></IconButton>
-          </ConfirmationDialog>
+          <DeleteConfirmation recipe={recipe} onDelete={onDelete}/>
         </Box>}
       </CardActions>
     </Card>
