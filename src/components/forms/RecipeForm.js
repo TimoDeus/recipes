@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box'
 import TextField from './elements/TextField'
 import Select from './elements/Select'
 import TagSelector from './elements/TagSelector'
-import { Field, reduxForm } from 'redux-form'
+import { Field, formValueSelector, reduxForm } from 'redux-form'
 import Button from '@material-ui/core/Button'
 import { compose } from 'redux'
 import connect from 'react-redux/lib/connect/connect'
@@ -16,6 +16,7 @@ import RichTextEditor from './elements/RichTextEditor'
 import { Redirect } from 'react-router-dom'
 import ImageUploader from './elements/ImageUploader'
 import Grid from '@material-ui/core/Grid'
+import { normalizeTitle } from '../../utils/recipeUtils'
 
 const styles = {
   root: {
@@ -41,9 +42,9 @@ class RecipeForm extends Component {
   }
 
   render () {
-    const { handleSubmit, submitting, tags, addTag, headline, classes, submitSucceeded } = this.props
+    const { handleSubmit, submitting, tags, addTag, headline, classes, submitSucceeded, titleValue } = this.props
     if (submitSucceeded) {
-      return <Redirect to="/"/>
+      return <Redirect to={`/${normalizeTitle(titleValue)}`}/>
     }
     return (
       <div>
@@ -89,11 +90,14 @@ const mapDispatchToProps = dispatch => ({
   addTag: tag => dispatch(addTag(tag)),
 })
 
-const mapStateToProps = ({ recipe: {recipe}, tags }, { formId }) => {
+const mapStateToProps = (state, ownProps) => {
+  const { recipe: {recipe}, tags } = state
+  const { formId } = ownProps
   const initialValues = {...recipe, ...{type: recipe.type || TYPE_MAIN}}
   return {
     form: formId,
     initialValues,
+    titleValue: formValueSelector(formId)(state, 'title'),
     tags
   }
 }
@@ -103,6 +107,7 @@ RecipeForm.propTypes = {
   getTags: PropTypes.func.isRequired,
   addTag: PropTypes.func.isRequired,
   formId: PropTypes.string.isRequired,
+  titleValue: PropTypes.string,
   tags: PropTypes.array.isRequired,
   recipe: PropTypes.object,
 }
