@@ -1,6 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import CardActions from '@material-ui/core/CardActions'
@@ -14,6 +13,8 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import { Link } from 'react-router-dom'
 import { DEFAULT_IMAGE } from '../../utils/constants'
 import DeleteConfirmation from '../forms/DeleteConfirmation'
+import { normalizeTitle } from '../../utils/recipeUtils'
+import Card from '@material-ui/core/Card'
 
 const useStyles = makeStyles(() => ({
   media: {
@@ -43,21 +44,23 @@ const RecipeCard = props => {
 
   return (
     <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={image || DEFAULT_IMAGE}
-          title={title}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="h2">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {shortDescription}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <Link to={`/${normalizeTitle(title)}`}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={image || DEFAULT_IMAGE}
+            title={title}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h6" component="h2">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {shortDescription}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
       <CardActions disableSpacing>
         <Box>
           {printTags()}
