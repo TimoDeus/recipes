@@ -4,8 +4,8 @@ import * as PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { getQueryParamsFromLocation, stringifyQueryParams } from '../../utils/queryString'
 import { fetchRecipes } from '../../actions/recipes'
-import Header from '../../components/header/Header'
-import LoginDialog from '../../components/auth/LoginDialog'
+import Header from './Header'
+import LoginDialog from '../auth/LoginDialog'
 import { logout } from '../../actions/auth'
 
 class HeaderContainer extends React.Component {

@@ -5,7 +5,7 @@ import RecipeList from './recipes/RecipeList'
 import NotFoundPage from './NotFoundPage'
 import CreateRecipeForm from './forms/CreateRecipeForm'
 import EditRecipeForm from './forms/EditRecipeForm'
-import HeaderContainer from '../container/header/HeaderContainer'
+import HeaderContainer from './header/HeaderContainer'
 import Container from '@material-ui/core/Container'
 
 class App extends Component {
@@ -16,6 +16,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={RecipeList}/>
           <Route path="/addRecipe" component={CreateRecipeForm}/>
+          <Route path="/editRecipe/:recipeId" component={EditRecipeForm}/>
           <Route path="/editRecipe/:recipeId" component={EditRecipeForm}/>
           <Route component={NotFoundPage}/>
         </Switch>
