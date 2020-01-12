@@ -6,7 +6,6 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MUISelect from '@material-ui/core/Select'
 import { makeStyles } from '@material-ui/core/styles'
 import MenuItem from '@material-ui/core/MenuItem'
-import { TYPE_MAIN } from '../../../utils/constants'
 import { messages } from '../../../utils/messages'
 
 const useStyles = makeStyles(() => ({
@@ -26,7 +25,7 @@ const renderSelect = ({ label, input, options, classes }) =>
   <FormControl className={classes.formControl}>
     <InputLabel>{label}</InputLabel>
     <MUISelect
-      value={input.value || TYPE_MAIN}
+      value={input.value}
       onChange={handleChange(input.onChange)}
     >
       {options.map(o => <MenuItem key={o} value={o}>{messages[o]}</MenuItem>)}

@@ -89,11 +89,14 @@ const mapDispatchToProps = dispatch => ({
   addTag: tag => dispatch(addTag(tag)),
 })
 
-const mapStateToProps = ({ recipe, tags }, { formId }) => ({
-  initialValues: recipe,
-  form: formId,
-  tags
-})
+const mapStateToProps = ({ recipe, tags }, { formId }) => {
+  const initialValues = {...recipe, ... {type: recipe.type || TYPE_MAIN}}
+  return {
+    form: formId,
+    initialValues,
+    tags
+  }
+}
 
 RecipeForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
