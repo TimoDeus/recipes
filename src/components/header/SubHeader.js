@@ -33,6 +33,8 @@ class SubHeader extends React.Component {
         <Tabs
           value={activeTab}
           onChange={this.handleTypeChange}
+          scrollButtons="auto"
+          variant="scrollable"
           indicatorColor="primary"
           textColor="primary"
           centered
