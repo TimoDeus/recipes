@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Header = props => {
-  const { handleSearch, username, query, openLoginDialog, onLogout, redirectToRecipeForm } = props
+  const { handleSearch, query, openLoginDialog, onLogout, isAuthenticated, resetFilter } = props
   const classes = useStyles()
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -94,7 +94,7 @@ const Header = props => {
 
   const mobileMenuId = 'menu-mobile'
   const renderMobileMenu = props => {
-    const { username, redirectToRecipeForm } = props
+    const { isAuthenticated } = props
     return (<Menu
         anchorEl={mobileMoreAnchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -104,8 +104,8 @@ const Header = props => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
       >
-        {username && <MenuItem onClick={redirectToRecipeForm}>Neues Rezept</MenuItem>}
-        {username ?
+        {isAuthenticated && <MenuItem component={Link} to="/addRecipe">Neues Rezept</MenuItem>}
+        {isAuthenticated ?
           <MenuItem onClick={onLogout}>Logout</MenuItem> :
           <MenuItem onClick={openLoginDialog}>Login</MenuItem>
         }
@@ -117,7 +117,7 @@ const Header = props => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link to={'/'} className={classes.titleLink}>
+          <Link to={'/'} className={classes.titleLink} onClick={resetFilter}>
             <Typography className={classes.title} variant="h6" noWrap>
               Rezepte
             </Typography>
@@ -139,8 +139,8 @@ const Header = props => {
             />
           </div>
           <div className={classes.sectionDesktop}>
-            {username && <Button color="inherit" variant="outlined" className={classes.menuButton} onClick={redirectToRecipeForm}>Neues Rezept</Button>}
-            {username ?
+            {isAuthenticated && <Button color="inherit" variant="outlined" className={classes.menuButton} component={Link} to="/addRecipe">Neues Rezept</Button>}
+            {isAuthenticated ?
               <Button color="secondary" variant="outlined" className={classes.menuButton} onClick={onLogout}>Logout</Button> :
               <Button color="inherit" variant="outlined" className={classes.menuButton} onClick={openLoginDialog}>Login</Button>
             }
