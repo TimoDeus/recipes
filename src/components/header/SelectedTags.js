@@ -6,7 +6,6 @@ import { Box } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    justifyContent: 'center',
     flexWrap: 'wrap',
     padding: theme.spacing(0.5),
     minHeight: 48,

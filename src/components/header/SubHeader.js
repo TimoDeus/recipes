@@ -37,7 +37,6 @@ class SubHeader extends React.Component {
           variant="scrollable"
           indicatorColor="primary"
           textColor="primary"
-          centered
         >
           {Object.keys(recipes).length !== 0 && types.map(t => (
             <Tab
